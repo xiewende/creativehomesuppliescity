@@ -2,9 +2,12 @@ package com.xiewende.creativehomesuppliescity;
 
 import com.xiewende.creativehomesuppliescity.mapper.UserMapper;
 import com.xiewende.creativehomesuppliescity.pojo.User;
+import com.xiewende.creativehomesuppliescity.utils.ConstantProperties;
+import com.xiewende.creativehomesuppliescity.utils.MD5Utils;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
@@ -13,6 +16,12 @@ class CreativehomesuppliescityApplicationTests {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private ConstantProperties properties;
+
+
+
 
     //测试添加一个用户
     @Test
@@ -35,9 +44,16 @@ class CreativehomesuppliescityApplicationTests {
 
     }
 
+    //测试常量
     @Test
     void test1(){
-        System.out.println(1);
+        System.out.println(properties.getName());
+    }
+
+    //测试MD5 utils
+    @Test
+    void test2(){
+        System.out.println(MD5Utils.getMD5passwprd("1234567"));
     }
 
 }
