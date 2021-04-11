@@ -24,6 +24,17 @@ public class ConstantProperties {
     @Value("${com.xiewende.defalt.ip}")
     private String defaltIp;
 
+    @Value("${com.xiewende.defalt.password}")
+    private String defaltPassword;
+
+    public String getDefaltPassword() {
+        return defaltPassword;
+    }
+
+    public void setDefaltPassword(String defaltPassword) {
+        this.defaltPassword = defaltPassword;
+    }
+
     public String getDefalt_imge_path() {
         return defalt_imge_path;
     }

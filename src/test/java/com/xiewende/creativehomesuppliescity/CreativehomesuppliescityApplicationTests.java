@@ -53,7 +53,7 @@ class CreativehomesuppliescityApplicationTests {
     //测试MD5 utils
     @Test
     void test2(){
-        System.out.println(MD5Utils.getMD5passwprd("1234567"));
+        System.out.println(MD5Utils.getMD5passwprd("000000"));
     }
 
 }

@@ -18,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +33,7 @@ import java.util.regex.Pattern;
 @Api(tags = "User",description = "用户信息管理接口")
 @RestController
 @CrossOrigin
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -51,7 +53,7 @@ public class UserController {
                     dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "oldPassword", value = "旧密码", required = true,
                     dataType = "string", paramType = "query",defaultValue = "1"),
-            @ApiImplicitParam(name = "newPassword", value = "查询页码", required = true,
+            @ApiImplicitParam(name = "newPassword", value = "新密码", required = true,
                     dataType = "string", paramType = "query",defaultValue = "1")
     })
     public Result updatePassword(Integer id, String oldPassword, String newPassword){
@@ -147,28 +149,19 @@ public class UserController {
         if(!m1.matches()) return Result.build(400,"邮箱格式错误！！！");
 
         //复制给 dao层用的bean
-        User updateUser = new User();
+        User updateUser = userService.selectUserById(id);
         BeanUtils.copyProperties(user,updateUser); // 注意导入的包不一样，顺序不一样
         //性别
         if(user.getSex().equals("男"))updateUser.setGender(0);
         else updateUser.setGender(1);
-        //加密密码
-        updateUser.setPassword(MD5Utils.getMD5passwprd(user.getPassword()));
+
 
         //头像部分
-        if(file == null || file.getSize() == 0){  //默认头像
-            updateUser.setImage(properties.getDefalt_imge_path());
-        }else{
+        if(file != null && file.getSize() != 0){  //默认头像
             //更好的做法就是抽出一个方法来，但是有点问题  只能这里很多代码了
             String storePath = UploadFileUtil.upload(file, fastFileStorageClient,properties);
             updateUser.setImage(storePath);
-
-
         }
-        
-        //id
-        updateUser.setId(id);
-        updateUser.setIsdelete(0);
 
         //修改
         Integer integer = userService.updateOther(updateUser);

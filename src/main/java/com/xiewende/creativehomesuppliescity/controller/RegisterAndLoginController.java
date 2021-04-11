@@ -116,6 +116,9 @@ public class RegisterAndLoginController {
 //                e.printStackTrace();
 //            }
         }
+
+        //逻辑删除
+        insertUser.setIsdelete(0);
         
         //添加
         Integer integer = userService.insertUser(insertUser);
