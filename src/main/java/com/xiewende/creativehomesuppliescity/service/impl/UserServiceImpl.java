@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService {
         UserExample.Criteria criteria = userExample.createCriteria();
         criteria.andUserNameEqualTo(user.getUserName());
         criteria.andIsdeleteEqualTo(0); //没有删除
+        criteria.andIdNotEqualTo(user.getId());
         List<User> list = userMapper.selectByExample(userExample);
         if(list.size()>0) return 0; //有重复
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.xiewende.creativehomesuppliescity.mapper.BrandMapper" >
   <resultMap id="BaseResultMap" type="com.xiewende.creativehomesuppliescity.pojo.Brand" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="brand _name" property="brandName" jdbcType="VARCHAR" />
+    <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="designer_id" property="designerId" jdbcType="INTEGER" />
     <result column="isDelete" property="isdelete" jdbcType="INTEGER" />
@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, "brand _name", description, designer_id, isDelete
+    id, brand_name, description, designer_id, isDelete
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiewende.creativehomesuppliescity.pojo.BrandExample" >
     select
@@ -100,7 +100,7 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xiewende.creativehomesuppliescity.pojo.Brand" >
-    insert into brand (id, "brand _name", description, 
+    insert into brand (id, brand_name, description, 
       designer_id, isDelete)
     values (#{id,jdbcType=INTEGER}, #{brandName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{designerId,jdbcType=INTEGER}, #{isdelete,jdbcType=INTEGER})
@@ -112,7 +112,7 @@
         id,
       </if>
       <if test="brandName != null" >
-        "brand _name",
+        brand_name,
       </if>
       <if test="description != null" >
         description,
@@ -155,7 +155,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.brandName != null" >
-        "brand _name" = #{record.brandName,jdbcType=VARCHAR},
+        brand_name = #{record.brandName,jdbcType=VARCHAR},
       </if>
       <if test="record.description != null" >
         description = #{record.description,jdbcType=VARCHAR},
@@ -174,7 +174,7 @@
   <update id="updateByExample" parameterType="map" >
     update brand
     set id = #{record.id,jdbcType=INTEGER},
-      "brand _name" = #{record.brandName,jdbcType=VARCHAR},
+      brand_name = #{record.brandName,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       designer_id = #{record.designerId,jdbcType=INTEGER},
       isDelete = #{record.isdelete,jdbcType=INTEGER}
@@ -186,7 +186,7 @@
     update brand
     <set >
       <if test="brandName != null" >
-        "brand _name" = #{brandName,jdbcType=VARCHAR},
+        brand_name = #{brandName,jdbcType=VARCHAR},
       </if>
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
@@ -202,7 +202,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xiewende.creativehomesuppliescity.pojo.Brand" >
     update brand
-    set "brand _name" = #{brandName,jdbcType=VARCHAR},
+    set brand_name = #{brandName,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       designer_id = #{designerId,jdbcType=INTEGER},
       isDelete = #{isdelete,jdbcType=INTEGER}

@@ -26,6 +26,9 @@ public interface DesignerService {
     //根据id查询一个设计师
     public Designer selectDesignerById(Integer id);
 
+    //查询设计师详情
+    public Designer selectDesignerDeatils(Integer id);
+
     //修改密码
     public Integer updatePassword(Integer id,String oldPassword,String newPassword);
 }

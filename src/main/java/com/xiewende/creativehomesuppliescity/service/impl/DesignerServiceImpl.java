@@ -38,6 +38,8 @@ public class DesignerServiceImpl implements DesignerService {
         DesignerExample designerExample = new DesignerExample();
         DesignerExample.Criteria criteria = designerExample.createCriteria();
         criteria.andDesignerNameEqualTo(designer.getDesignerName());
+        criteria.andIsdeleteEqualTo(0);
+        criteria.andIdNotEqualTo(designer.getId());
         List<Designer> designers = designerMapper.selectByExample(designerExample);
         if(designers.size()>0) return 0;
         return designerMapper.updateByPrimaryKey(designer);
@@ -68,12 +70,19 @@ public class DesignerServiceImpl implements DesignerService {
 
     @Override
     public Designer selectDesignerById(Integer id) {
+        return designerMapper.selectByPrimaryKey(id);
+    }
 
+    @Override
+    public Designer selectDesignerDeatils(Integer id) {
+
+        //TODO 查询设计详情的时候要将成功案例查询
         //修改人气
         Designer designer = designerMapper.selectByPrimaryKey(id);
         designer.setPopularity(designer.getPopularity()+1);
         designerMapper.updateByPrimaryKey(designer);
-        //TODO 查询设计详情的时候要将成功案例查询
+
+        //再查询与之关联的成功案例
         return designer;
     }
 

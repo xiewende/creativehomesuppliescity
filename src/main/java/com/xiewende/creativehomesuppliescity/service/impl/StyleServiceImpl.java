@@ -36,6 +36,8 @@ public class StyleServiceImpl implements StyleService {
         StyleExample styleExample = new StyleExample();
         StyleExample.Criteria criteria = styleExample.createCriteria();
         criteria.andTypeNameEqualTo(style.getTypeName());
+        criteria.andIsdeleteEqualTo(0);
+        criteria.andIdNotEqualTo(style.getId());
         List<Style> styles = styleMapper.selectByExample(styleExample);
         if(styles.size()>0) return 0;
 
@@ -51,7 +53,11 @@ public class StyleServiceImpl implements StyleService {
 
     @Override
     public List<Style> listAllStyle() {
-        return styleMapper.selectByExample(new StyleExample());
+        StyleExample styleExample = new StyleExample();
+        StyleExample.Criteria criteria = styleExample.createCriteria();
+        criteria.andIsdeleteEqualTo(0);//没有删除的
+
+        return styleMapper.selectByExample(styleExample);
     }
 
     @Override

@@ -165,72 +165,72 @@ public class BrandExample {
         }
 
         public Criteria andBrandNameIsNull() {
-            addCriterion("\"brand _name\" is null");
+            addCriterion("brand_name is null");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameIsNotNull() {
-            addCriterion("\"brand _name\" is not null");
+            addCriterion("brand_name is not null");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameEqualTo(String value) {
-            addCriterion("\"brand _name\" =", value, "brandName");
+            addCriterion("brand_name =", value, "brandName");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameNotEqualTo(String value) {
-            addCriterion("\"brand _name\" <>", value, "brandName");
+            addCriterion("brand_name <>", value, "brandName");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameGreaterThan(String value) {
-            addCriterion("\"brand _name\" >", value, "brandName");
+            addCriterion("brand_name >", value, "brandName");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameGreaterThanOrEqualTo(String value) {
-            addCriterion("\"brand _name\" >=", value, "brandName");
+            addCriterion("brand_name >=", value, "brandName");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameLessThan(String value) {
-            addCriterion("\"brand _name\" <", value, "brandName");
+            addCriterion("brand_name <", value, "brandName");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameLessThanOrEqualTo(String value) {
-            addCriterion("\"brand _name\" <=", value, "brandName");
+            addCriterion("brand_name <=", value, "brandName");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameLike(String value) {
-            addCriterion("\"brand _name\" like", value, "brandName");
+            addCriterion("brand_name like", value, "brandName");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameNotLike(String value) {
-            addCriterion("\"brand _name\" not like", value, "brandName");
+            addCriterion("brand_name not like", value, "brandName");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameIn(List<String> values) {
-            addCriterion("\"brand _name\" in", values, "brandName");
+            addCriterion("brand_name in", values, "brandName");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameNotIn(List<String> values) {
-            addCriterion("\"brand _name\" not in", values, "brandName");
+            addCriterion("brand_name not in", values, "brandName");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameBetween(String value1, String value2) {
-            addCriterion("\"brand _name\" between", value1, value2, "brandName");
+            addCriterion("brand_name between", value1, value2, "brandName");
             return (Criteria) this;
         }
 
         public Criteria andBrandNameNotBetween(String value1, String value2) {
-            addCriterion("\"brand _name\" not between", value1, value2, "brandName");
+            addCriterion("brand_name not between", value1, value2, "brandName");
             return (Criteria) this;
         }
 

@@ -114,7 +114,7 @@ public class StyleController {
     //查询全部用户，若输入了名字则模糊查询，若没有则查询全部
     @PostMapping("/listAllStyle")
     @ApiOperation("查询全部风格")
-    public Result listUserOrName(){
+    public Result listAllStyle(){
 
         //执行查询
         List<Style> styles = styleService.listAllStyle();

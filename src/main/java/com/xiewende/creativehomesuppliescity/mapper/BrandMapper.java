@@ -1,11 +1,12 @@
 package com.xiewende.creativehomesuppliescity.mapper;
 
-import java.util.List;
-
 import com.xiewende.creativehomesuppliescity.pojo.Brand;
 import com.xiewende.creativehomesuppliescity.pojo.BrandExample;
-import org.apache.ibatis.annotations.Param;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
 @Mapper
 public interface BrandMapper {
     int countByExample(BrandExample example);

@@ -11,6 +11,16 @@ public class Brand {
 
     private Integer isdelete;
 
+    private Designer designer;
+
+    public Designer getDesigner() {
+        return designer;
+    }
+
+    public void setDesigner(Designer designer) {
+        this.designer = designer;
+    }
+
     public Integer getId() {
         return id;
     }
