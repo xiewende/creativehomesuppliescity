@@ -3,7 +3,7 @@ package com.xiewende.creativehomesuppliescity.utils;
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.service.DefaultFastFileStorageClient;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
-import net.sf.json.JSON;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
