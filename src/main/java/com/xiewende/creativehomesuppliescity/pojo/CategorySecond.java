@@ -9,6 +9,16 @@ public class CategorySecond {
 
     private Integer isdelete;
 
+    private CategoryFirst categoryFirst;
+
+    public CategoryFirst getCategoryFirst() {
+        return categoryFirst;
+    }
+
+    public void setCategoryFirst(CategoryFirst categoryFirst) {
+        this.categoryFirst = categoryFirst;
+    }
+
     public Integer getId() {
         return id;
     }
