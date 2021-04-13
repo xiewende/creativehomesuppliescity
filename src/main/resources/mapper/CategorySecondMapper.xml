@@ -68,6 +68,19 @@
   <sql id="Base_Column_List" >
     id, category_name, category_first_id, isDelete
   </sql>
+
+  <select id="selectIdOfLikeCategoryName" resultType="java.lang.Integer">
+        select id
+        from category_second
+        where  category_name Like  "%"#{categorySecondName}"%";
+    </select>
+
+  <select id="selectIdOfLikeFirstName" resultType="java.lang.Integer">
+        select s.id
+        from category_second s , category_first f
+        where  s.category_first_id = f.id and f.category_name like "%"#{categoryFirstName}"%"
+    </select>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiewende.creativehomesuppliescity.pojo.CategorySecondExample" >
     select
     <if test="distinct" >

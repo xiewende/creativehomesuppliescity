@@ -79,6 +79,9 @@
     id, good_name, price, image, size, description, store, create_time, update_time, 
     hit_number, category_id, style_id, brand_id, isDelete
   </sql>
+
+
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiewende.creativehomesuppliescity.pojo.GoodsExample" >
     select
     <if test="distinct" >

@@ -8,6 +8,10 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface StyleMapper {
+
+    //根据名称模糊查询id的集合
+    List<Integer> selectIdOfLikeStyleName(String styleName);
+
     int countByExample(StyleExample example);
 
     int deleteByExample(StyleExample example);

@@ -9,6 +9,10 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface BrandMapper {
+
+    //根据名称模糊查询id的集合
+    List<Integer> selectIdOfLikeBrandName(String brandName);
+
     int countByExample(BrandExample example);
 
     int deleteByExample(BrandExample example);

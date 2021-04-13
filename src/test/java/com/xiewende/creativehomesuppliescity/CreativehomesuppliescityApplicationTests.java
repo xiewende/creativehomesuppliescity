@@ -1,5 +1,8 @@
 package com.xiewende.creativehomesuppliescity;
 
+import com.xiewende.creativehomesuppliescity.mapper.BrandMapper;
+import com.xiewende.creativehomesuppliescity.mapper.CategorySecondMapper;
+import com.xiewende.creativehomesuppliescity.mapper.StyleMapper;
 import com.xiewende.creativehomesuppliescity.mapper.UserMapper;
 import com.xiewende.creativehomesuppliescity.pojo.User;
 import com.xiewende.creativehomesuppliescity.utils.ConstantProperties;
@@ -10,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 
 @SpringBootTest
 class CreativehomesuppliescityApplicationTests {
@@ -19,6 +24,14 @@ class CreativehomesuppliescityApplicationTests {
 
     @Autowired
     private ConstantProperties properties;
+
+    @Autowired
+    private CategorySecondMapper categorySecondMapper;
+
+    @Autowired
+    private StyleMapper styleMapper;
+    @Autowired
+    private BrandMapper brandMapper;
 
 
 
@@ -54,6 +67,23 @@ class CreativehomesuppliescityApplicationTests {
     @Test
     void test2(){
         System.out.println(MD5Utils.getMD5passwprd("000000"));
+    }
+
+    //模糊查询id
+    @Test
+    void test3(){
+        List<Integer> list = categorySecondMapper.selectIdOfLikeCategoryName("电");
+        System.out.println(list.toString());
+
+        List<Integer> list1 = styleMapper.selectIdOfLikeStyleName("风");
+        System.out.println(list1.toString());
+
+        List<Integer> list2 = brandMapper.selectIdOfLikeBrandName("具");
+        System.out.println(list2.toString());
+
+        List<Integer> list3 = categorySecondMapper.selectIdOfLikeFirstName("客");
+        System.out.println(list3.toString());
+
     }
 
 }

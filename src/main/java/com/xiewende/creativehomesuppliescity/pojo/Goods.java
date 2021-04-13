@@ -29,6 +29,36 @@ public class Goods {
 
     private Integer brandId;
 
+    private CategorySecond categorySecond;
+
+    private Style style;
+
+    private Brand brand;
+
+    public CategorySecond getCategorySecond() {
+        return categorySecond;
+    }
+
+    public void setCategorySecond(CategorySecond categorySecond) {
+        this.categorySecond = categorySecond;
+    }
+
+    public Style getStyle() {
+        return style;
+    }
+
+    public void setStyle(Style style) {
+        this.style = style;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
     private Integer isdelete;
 
     public Integer getId() {
