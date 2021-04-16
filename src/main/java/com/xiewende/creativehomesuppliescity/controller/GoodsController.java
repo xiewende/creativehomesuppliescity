@@ -186,7 +186,6 @@ public class GoodsController {
         }else {
             return Result.build(500, "系统错误！！");
         }
-
     }
 
     //根据id查询一个
