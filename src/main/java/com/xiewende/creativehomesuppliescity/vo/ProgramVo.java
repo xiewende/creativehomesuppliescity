@@ -1,8 +1,14 @@
-package com.xiewende.creativehomesuppliescity.pojo;
+package com.xiewende.creativehomesuppliescity.vo;
+
+import com.xiewende.creativehomesuppliescity.pojo.Designer;
+import com.xiewende.creativehomesuppliescity.pojo.User;
 
 import java.util.Date;
 
-public class Program {
+/**
+ * @create 2021-04-18  19:33
+ */
+public class ProgramVo {
     private Integer id;
 
     private Integer userId;
@@ -19,27 +25,18 @@ public class Program {
 
     private String finisnIdea;
 
-    private Integer status;
+    //
+    private String statusStr;
 
-    private Date createTime;
+    private String createTimeStr;
 
-    private Date finishTime;
+    private String finishTimeStr;
 
-    private Integer isAccept;
-
-    private Integer isdelete;
-
+    private String isAcceptStr;
+    //
     private User user;
 
     private Designer designer;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public Designer getDesigner() {
         return designer;
@@ -78,7 +75,7 @@ public class Program {
     }
 
     public void setGoodName(String goodName) {
-        this.goodName = goodName == null ? null : goodName.trim();
+        this.goodName = goodName;
     }
 
     public String getSize() {
@@ -86,7 +83,7 @@ public class Program {
     }
 
     public void setSize(String size) {
-        this.size = size == null ? null : size.trim();
+        this.size = size;
     }
 
     public String getOtherDemand() {
@@ -94,7 +91,7 @@ public class Program {
     }
 
     public void setOtherDemand(String otherDemand) {
-        this.otherDemand = otherDemand == null ? null : otherDemand.trim();
+        this.otherDemand = otherDemand;
     }
 
     public String getFinishPic() {
@@ -102,7 +99,7 @@ public class Program {
     }
 
     public void setFinishPic(String finishPic) {
-        this.finishPic = finishPic == null ? null : finishPic.trim();
+        this.finishPic = finishPic;
     }
 
     public String getFinisnIdea() {
@@ -110,46 +107,46 @@ public class Program {
     }
 
     public void setFinisnIdea(String finisnIdea) {
-        this.finisnIdea = finisnIdea == null ? null : finisnIdea.trim();
+        this.finisnIdea = finisnIdea;
     }
 
-    public Integer getStatus() {
-        return status;
+    public String getStatusStr() {
+        return statusStr;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setStatusStr(String statusStr) {
+        this.statusStr = statusStr;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getCreateTimeStr() {
+        return createTimeStr;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateTimeStr(String createTimeStr) {
+        this.createTimeStr = createTimeStr;
     }
 
-    public Date getFinishTime() {
-        return finishTime;
+    public String getFinishTimeStr() {
+        return finishTimeStr;
     }
 
-    public void setFinishTime(Date finishTime) {
-        this.finishTime = finishTime;
+    public void setFinishTimeStr(String finishTimeStr) {
+        this.finishTimeStr = finishTimeStr;
     }
 
-    public Integer getIsAccept() {
-        return isAccept;
+    public String getIsAcceptStr() {
+        return isAcceptStr;
     }
 
-    public void setIsAccept(Integer isAccept) {
-        this.isAccept = isAccept;
+    public void setIsAcceptStr(String isAcceptStr) {
+        this.isAcceptStr = isAcceptStr;
     }
 
-    public Integer getIsdelete() {
-        return isdelete;
+    public User getUser() {
+        return user;
     }
 
-    public void setIsdelete(Integer isdelete) {
-        this.isdelete = isdelete;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
