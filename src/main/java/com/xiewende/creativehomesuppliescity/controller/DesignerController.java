@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
  * @create 2021-04-10  21:54
  */
 
-@Api(tags = "Designer",description = "设计师管理接口")
+@Api(tags = "Designer(2)",description = "设计师管理接口")
 @RestController
 @CrossOrigin
 @RequestMapping("/designer")

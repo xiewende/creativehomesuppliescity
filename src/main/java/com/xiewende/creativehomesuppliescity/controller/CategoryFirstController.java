@@ -23,7 +23,7 @@ import java.util.List;
  * @create 2021-04-10  21:54
  */
 
-@Api(tags = "CategoryFirst",description = "商品一级分类管理接口")
+@Api(tags = "CategoryFirst(3)",description = "商品一级分类管理接口")
 @RestController
 @CrossOrigin
 @RequestMapping("/categoryFirst")

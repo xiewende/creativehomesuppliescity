@@ -40,13 +40,16 @@ public class RegisterAndLoginController {
     @ApiOperation("hello")
     @PostMapping("/hello")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "fieldName", value = "场地名称", required = true,
+            @ApiImplicitParam(name = "idList", value = "id集合", required = true,
                     dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "you", value = "场地地点", required = true,
-                    dataType = "int", paramType = "query")
     })
-    public String hello(String fieldName,Integer you){
-        return fieldName+you;
+    public String hello(String idList){
+        if(idList == null) return "meiyoushuji";
+        String[] split = idList.split(",");
+        for(int i=0;i<split.length;i++){
+            System.out.println("第"+i+"个id："+split[i]);
+        }
+        return split.toString();
     }
 
     //用户注册

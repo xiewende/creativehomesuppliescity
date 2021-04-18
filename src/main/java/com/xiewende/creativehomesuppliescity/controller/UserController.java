@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 /**
  * @create 2021-04-10  17:53
  */
-@Api(tags = "User",description = "用户信息管理接口")
+@Api(tags = "User(1)",description = "用户信息管理接口")
 @RestController
 @CrossOrigin
 @RequestMapping("/user")

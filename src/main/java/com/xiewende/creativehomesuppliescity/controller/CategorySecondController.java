@@ -21,7 +21,7 @@ import java.util.List;
  * @create 2021-04-10  21:54
  */
 
-@Api(tags = "CategorySecond",description = "商品二级分类管理接口")
+@Api(tags = "CategorySecond(4)",description = "商品二级分类管理接口")
 @RestController
 @CrossOrigin
 @RequestMapping("/ategocrySecond")

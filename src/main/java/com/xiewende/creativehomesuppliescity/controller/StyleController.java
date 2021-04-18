@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * @create 2021-04-10  21:54
  */
 
-@Api(tags = "Style",description = "风格管理接口")
+@Api(tags = "Style(5)",description = "风格管理接口")
 @RestController
 @CrossOrigin
 @RequestMapping("/style")

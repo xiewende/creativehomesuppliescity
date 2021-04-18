@@ -23,7 +23,7 @@ import java.util.List;
  * @create 2021-04-10  21:54
  */
 
-@Api(tags = "Brand",description = "品牌管理接口")
+@Api(tags = "Brand(6)",description = "品牌管理接口")
 @RestController
 @CrossOrigin
 @RequestMapping("/brand")

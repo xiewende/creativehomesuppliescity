@@ -27,7 +27,7 @@ import java.util.List;
  * @create 2021-04-10  21:54
  */
 
-@Api(tags = "Goods",description = "家居用品管理接口")
+@Api(tags = "Goods(7)",description = "家居用品管理接口")
 @RestController
 @CrossOrigin
 @RequestMapping("/goods")
