@@ -1,15 +1,20 @@
 package com.xiewende.creativehomesuppliescity.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Myorder {
     private Integer id;
 
-    private Integer orderNumber;
+    private String orderNumber;
 
     private Integer orderNum;
 
     private Integer userId;
+
+    private User user;
+
+
 
     private Date createTime;
 
@@ -31,6 +36,30 @@ public class Myorder {
 
     private Integer isdelete;
 
+    private String address;
+
+    private String iphone;
+
+    private String receiveName;
+
+    private List<OrderGoods> orderGoodsList;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<OrderGoods> getOrderGoodsList() {
+        return orderGoodsList;
+    }
+
+    public void setOrderGoodsList(List<OrderGoods> orderGoodsList) {
+        this.orderGoodsList = orderGoodsList;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -39,12 +68,12 @@ public class Myorder {
         this.id = id;
     }
 
-    public Integer getOrderNumber() {
+    public String getOrderNumber() {
         return orderNumber;
     }
 
-    public void setOrderNumber(Integer orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber == null ? null : orderNumber.trim();
     }
 
     public Integer getOrderNum() {
@@ -141,5 +170,29 @@ public class Myorder {
 
     public void setIsdelete(Integer isdelete) {
         this.isdelete = isdelete;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
+
+    public String getIphone() {
+        return iphone;
+    }
+
+    public void setIphone(String iphone) {
+        this.iphone = iphone == null ? null : iphone.trim();
+    }
+
+    public String getReceiveName() {
+        return receiveName;
+    }
+
+    public void setReceiveName(String receiveName) {
+        this.receiveName = receiveName == null ? null : receiveName.trim();
     }
 }

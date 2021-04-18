@@ -19,6 +19,8 @@ public class OrderGoods {
 
     private Integer isdelete;
 
+    private String goodName;
+
     public Integer getId() {
         return id;
     }
@@ -89,5 +91,13 @@ public class OrderGoods {
 
     public void setIsdelete(Integer isdelete) {
         this.isdelete = isdelete;
+    }
+
+    public String getGoodName() {
+        return goodName;
+    }
+
+    public void setGoodName(String goodName) {
+        this.goodName = goodName == null ? null : goodName.trim();
     }
 }

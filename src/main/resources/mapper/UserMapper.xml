@@ -73,6 +73,13 @@
   <sql id="Base_Column_List" >
     id, user_name, password, iphone, gender, email, address, image, isDelete
   </sql>
+
+  <select id="selectIdOfLikeUserName" resultType="java.lang.Integer">
+        select id
+        from user
+        where  user_name Like  "%"#{userName}"%";
+    </select>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiewende.creativehomesuppliescity.pojo.UserExample" >
     select
     <if test="distinct" >

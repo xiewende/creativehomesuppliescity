@@ -8,6 +8,9 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
+
+    List<Integer> selectIdOfLikeUserName(String userName);
+
     int countByExample(UserExample example);
 
     int deleteByExample(UserExample example);

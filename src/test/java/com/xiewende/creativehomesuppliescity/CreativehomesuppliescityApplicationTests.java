@@ -1,18 +1,17 @@
 package com.xiewende.creativehomesuppliescity;
 
-import com.xiewende.creativehomesuppliescity.mapper.BrandMapper;
-import com.xiewende.creativehomesuppliescity.mapper.CategorySecondMapper;
-import com.xiewende.creativehomesuppliescity.mapper.StyleMapper;
-import com.xiewende.creativehomesuppliescity.mapper.UserMapper;
+import com.xiewende.creativehomesuppliescity.mapper.*;
 import com.xiewende.creativehomesuppliescity.pojo.User;
 import com.xiewende.creativehomesuppliescity.utils.ConstantProperties;
 import com.xiewende.creativehomesuppliescity.utils.MD5Utils;
+import com.xiewende.creativehomesuppliescity.utils.RandomGetString;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -32,6 +31,9 @@ class CreativehomesuppliescityApplicationTests {
     private StyleMapper styleMapper;
     @Autowired
     private BrandMapper brandMapper;
+
+    @Autowired
+    private GoodsMapper goodsMapper;
 
 
 
@@ -72,7 +74,7 @@ class CreativehomesuppliescityApplicationTests {
     //模糊查询id
     @Test
     void test3(){
-        List<Integer> list = categorySecondMapper.selectIdOfLikeCategoryName("电");
+       /* List<Integer> list = categorySecondMapper.selectIdOfLikeCategoryName("电");
         System.out.println(list.toString());
 
         List<Integer> list1 = styleMapper.selectIdOfLikeStyleName("风");
@@ -82,8 +84,31 @@ class CreativehomesuppliescityApplicationTests {
         System.out.println(list2.toString());
 
         List<Integer> list3 = categorySecondMapper.selectIdOfLikeFirstName("客");
-        System.out.println(list3.toString());
+        System.out.println(list3.toString());*/
+        List<Integer> list = userMapper.selectIdOfLikeUserName("王");
+        System.out.println(list.toString());
 
+        List<Integer> list1 = goodsMapper.selectIdOfLikeGoodName("餐");
+        System.out.println(list1.toString());
+
+    }
+
+    @Test
+    void test5(){
+        String s = RandomGetString.getOrderNum();
+        System.out.println(s);
+
+        String s1 = RandomGetString.getOrderNum();
+        System.out.println(s1);
+    }
+
+    //时间格式的转换
+    @Test
+    void test6(){
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateString = formatter.format(currentTime);
+        System.out.println(dateString);
     }
 
 }

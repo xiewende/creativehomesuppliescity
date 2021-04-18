@@ -8,6 +8,9 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface GoodsMapper {
+
+    List<Integer> selectIdOfLikeGoodName(String goodName);
+
     int countByExample(GoodsExample example);
 
     int deleteByExample(GoodsExample example);
