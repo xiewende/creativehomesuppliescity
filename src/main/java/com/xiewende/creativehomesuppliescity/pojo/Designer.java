@@ -1,5 +1,7 @@
 package com.xiewende.creativehomesuppliescity.pojo;
 
+import java.util.List;
+
 public class Designer {
     private Integer id;
 
@@ -28,6 +30,16 @@ public class Designer {
     private Integer popularity;
 
     private Integer isdelete;
+
+    private List<FinnishProgram> finnishProgramList;
+
+    public List<FinnishProgram> getFinnishProgramList() {
+        return finnishProgramList;
+    }
+
+    public void setFinnishProgramList(List<FinnishProgram> finnishProgramList) {
+        this.finnishProgramList = finnishProgramList;
+    }
 
     public Integer getId() {
         return id;

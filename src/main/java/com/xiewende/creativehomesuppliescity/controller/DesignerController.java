@@ -269,4 +269,21 @@ public class DesignerController {
     }
 
 
+    @PostMapping("/selectDesignerDeatils")
+    @ApiOperation("查询设计师某一位设计师的详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "需要被查询设计师的id", required = true,
+                    dataType = "int", paramType = "query")
+    })
+    public Result selectDesignerDeatils(Integer id){
+        if(id == null ) return Result.build(400,"数据不可以为空");
+        Designer designer = designerService.selectDesignerDeatils(id);
+        if (designer != null) {
+            return Result.build(200,"查到了",designer);
+        }else{
+            return Result.build(400, "没有此风格");
+        }
+    }
+
+
 }

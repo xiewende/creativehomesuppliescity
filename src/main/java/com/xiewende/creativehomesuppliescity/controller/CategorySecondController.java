@@ -29,7 +29,7 @@ public class CategorySecondController {
 
     @Autowired
     private CategorySecondService categorySecondService;
-    //添加  TODO
+    //添加
     @ApiOperation("添加二级分类")
     @PostMapping("/insertCategorySecond")
     @ApiImplicitParams({

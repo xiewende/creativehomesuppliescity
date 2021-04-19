@@ -2,9 +2,8 @@ package com.xiewende.creativehomesuppliescity.service.impl;
 
 import com.sun.xml.internal.bind.v2.TODO;
 import com.xiewende.creativehomesuppliescity.mapper.DesignerMapper;
-import com.xiewende.creativehomesuppliescity.pojo.Designer;
-import com.xiewende.creativehomesuppliescity.pojo.DesignerExample;
-import com.xiewende.creativehomesuppliescity.pojo.User;
+import com.xiewende.creativehomesuppliescity.mapper.FinnishProgramMapper;
+import com.xiewende.creativehomesuppliescity.pojo.*;
 import com.xiewende.creativehomesuppliescity.service.DesignerService;
 import com.xiewende.creativehomesuppliescity.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,8 @@ public class DesignerServiceImpl implements DesignerService {
 
     @Autowired
     private DesignerMapper designerMapper;
+    @Autowired
+    private FinnishProgramMapper finnishProgramMapper;
 
     @Override
     public Integer InsertDesigner(Designer designer) {
@@ -83,6 +84,12 @@ public class DesignerServiceImpl implements DesignerService {
         designerMapper.updateByPrimaryKey(designer);
 
         //再查询与之关联的成功案例
+        FinnishProgramExample finnishProgramExample = new FinnishProgramExample();
+        FinnishProgramExample.Criteria criteria = finnishProgramExample.createCriteria();
+        criteria.andDesignerIdEqualTo(designer.getId());
+        List<FinnishProgram> finnishPrograms = finnishProgramMapper.selectByExample(finnishProgramExample);
+        designer.setFinnishProgramList(finnishPrograms);
+
         return designer;
     }
 
