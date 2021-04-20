@@ -27,6 +27,28 @@ public class ConstantProperties {
     @Value("${com.xiewende.defalt.password}")
     private String defaltPassword;
 
+    @Value("${com.xiewende.defalt.admin.name}")
+    private String adminName;
+
+    @Value("${com.xiewende.defalt.admin.password}")
+    private String adminPassword;
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
+
+    public String getAdminPassword() {
+        return adminPassword;
+    }
+
+    public void setAdminPassword(String adminPassword) {
+        this.adminPassword = adminPassword;
+    }
+
     public String getDefaltPassword() {
         return defaltPassword;
     }

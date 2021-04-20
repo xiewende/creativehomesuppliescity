@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,9 @@ public class OrderCartController {
     @Autowired
     private OrderCartService orderCartService;
 
+    @Autowired
+    RedisTemplate<String, Object> redisTemplate;
+
     //添加
     @ApiOperation("添加购物车")
     @PostMapping("/insertOrderCart")
@@ -40,6 +44,10 @@ public class OrderCartController {
                     dataType = "int", paramType = "query"),
     })
     public Result insertOrderCart(Integer userId,Integer goodsId,Integer num){
+        //todo  还需要判断是否已经登录的状态，这里需要redis，后续再来完善，没有登录直接返回
+        String isLogin = (String) redisTemplate.opsForValue().get("user");
+        if(isLogin == null) return Result.build(500,"没有登录，请先登录此系统！");
+
         //1、判断是否为空
         if(userId == null || goodsId == null)
         {
@@ -53,7 +61,7 @@ public class OrderCartController {
             return Result.build(400,"选择商品的个数需要大于0");
         }
 
-        //todo  还需要判断是否已经登录的状态，这里需要redis，后续再来完善，没有登录直接返回
+
 
         //添加
         Integer integer = orderCartService.insertOrderCart(userId,goodsId,num);

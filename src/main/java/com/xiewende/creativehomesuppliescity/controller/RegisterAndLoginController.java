@@ -2,7 +2,9 @@ package com.xiewende.creativehomesuppliescity.controller;
 
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
+import com.xiewende.creativehomesuppliescity.pojo.Designer;
 import com.xiewende.creativehomesuppliescity.pojo.User;
+import com.xiewende.creativehomesuppliescity.service.LoginService;
 import com.xiewende.creativehomesuppliescity.service.UserService;
 import com.xiewende.creativehomesuppliescity.utils.ConstantProperties;
 import com.xiewende.creativehomesuppliescity.utils.MD5Utils;
@@ -12,11 +14,13 @@ import com.xiewende.creativehomesuppliescity.vo.UserVo;
 import io.swagger.annotations.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +40,12 @@ public class RegisterAndLoginController {
 
     @Autowired
     private FastFileStorageClient fastFileStorageClient;
+
+    @Autowired
+    RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private LoginService loginService;
 
     @ApiOperation("hello")
     @PostMapping("/hello")
@@ -131,6 +141,57 @@ public class RegisterAndLoginController {
             return Result.build(400, "该用户已经存在！！！");
         } else {
             return Result.build(500, "系统错误！！！");
+        }
+    }
+
+    @PostMapping("/login")
+    @ApiOperation("登录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tag", value = "哪位登录（用户：0，设计师：1，管理员：2）", required = true,
+                    dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "name", value = "用户名", required = true,
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "password", value = "登录密码", required = true,
+                    dataType = "string", paramType = "query")
+    })
+    public Result login(Integer tag,String name, String password){
+        if(tag == null ||
+                name == null || "".equals(name)
+                || password == null || "".equals(password)) {
+            return Result.build(400,"数据不可以为空");
+        }
+        //用户
+        if(tag == 0){
+            User user = loginService.userLogin(name, password);
+            if(user == null) return Result.build(400, "用户账户或者密码错误！！！");
+            //存到redis
+            redisTemplate.opsForValue().set("user", "user", 30 * 60, TimeUnit.SECONDS);
+            return Result.build(200, "登陆成功！！！", user);
+        }
+        //设计师
+        else if(tag == 1){
+            Designer designer = loginService.designerLogin(name, password);
+            if(designer == null) return Result.build(400, "用户账户或者密码错误！！！");
+            redisTemplate.opsForValue().set("user", "user", 30 * 60, TimeUnit.SECONDS);
+            return Result.build(200, "登陆成功！！！", designer);
+        }
+        //管理员
+        else{
+            Integer integer = loginService.adminLogin(name, password);
+            if(integer == 0) return Result.build(400, "用户账户或者密码错误！！！");
+            redisTemplate.opsForValue().set("user", "user", 30 * 60, TimeUnit.SECONDS);
+            return Result.ok();
+        }
+    }
+
+    @PostMapping("/loginout")
+    @ApiOperation("退出登录")
+    public Result loginout(){
+        Boolean loginUser = redisTemplate.delete("user");
+        if (loginUser) {
+            return Result.build(200, "退出成功！！！");
+        } else {
+            return Result.build(500, "系统出现故障");
         }
     }
 

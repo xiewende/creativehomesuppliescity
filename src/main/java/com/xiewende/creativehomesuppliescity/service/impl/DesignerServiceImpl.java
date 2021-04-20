@@ -54,7 +54,6 @@ public class DesignerServiceImpl implements DesignerService {
     }
 
     @Override
-    //TODO  还要将风格查全部 模糊查询后面两个
     public List<Designer> listDesigner(String professionalTitle, String type) {
 
         DesignerExample designerExample = new DesignerExample();
@@ -77,7 +76,7 @@ public class DesignerServiceImpl implements DesignerService {
     @Override
     public Designer selectDesignerDeatils(Integer id) {
 
-        //TODO 查询设计详情的时候要将成功案例查询
+
         //修改人气
         Designer designer = designerMapper.selectByPrimaryKey(id);
         designer.setPopularity(designer.getPopularity()+1);
