@@ -1,6 +1,9 @@
 package com.xiewende.creativehomesuppliescity.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
+import com.xiewende.creativehomesuppliescity.pojo.Brand;
 import com.xiewende.creativehomesuppliescity.pojo.Goods;
 import com.xiewende.creativehomesuppliescity.service.GoodsService;
 import com.xiewende.creativehomesuppliescity.utils.ConstantProperties;
@@ -37,7 +40,7 @@ public class GoodsController {
     private GoodsService goodsService;
 
     @Autowired
-    private ConstantProperties properties;
+    private ConstantProperties constantProperties;
 
     @Autowired
     private FastFileStorageClient fastFileStorageClient;
@@ -75,7 +78,7 @@ public class GoodsController {
         insertGoods.setHitNumber(0);
 
         //图片
-        String storePath = UploadFileUtil.upload(file, fastFileStorageClient,properties);
+        String storePath = UploadFileUtil.upload(file, fastFileStorageClient,constantProperties);
         insertGoods.setImage(storePath);
 
         //添加
@@ -122,7 +125,7 @@ public class GoodsController {
         updateGoods.setUpdateTime(new Date());
 
         //图片
-        String storePath = UploadFileUtil.upload(file, fastFileStorageClient,properties);
+        String storePath = UploadFileUtil.upload(file, fastFileStorageClient,constantProperties);
         updateGoods.setImage(storePath);
 
         //修改
@@ -166,9 +169,11 @@ public class GoodsController {
             @ApiImplicitParam(name = "brandName", value = "需要查询家居用品品牌名称",
                     dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "goodName", value = "需要查询家居用品商品名称",
-                    dataType = "string", paramType = "query")
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "pageNum", value = "查询页码", required = true,
+                    dataType = "Int", paramType = "query",defaultValue = "1")
     })
-    public Result listGoodsWithSomeDemand(String categoryFirstName,String categorySecondName, String stypeName, String brandName, String goodName){
+    public Result listGoodsWithSomeDemand(Integer pageNum,String categoryFirstName,String categorySecondName, String stypeName, String brandName, String goodName){
 
         if("".equals(categorySecondName)) categorySecondName = null;
         if("".equals(categoryFirstName)) categoryFirstName = null;
@@ -176,11 +181,14 @@ public class GoodsController {
         if("".equals(brandName)) brandName = null;
         if("".equals(goodName)) goodName = null;
 
-
+        //分页
+        PageHelper.startPage(pageNum,constantProperties.getPageSize());
         //执行查询
         List<Goods> goods = goodsService.listGoodsWithSomeDemand(categoryFirstName,categorySecondName, stypeName, brandName, goodName);
+        PageInfo<Goods> goodsPageInfo = new PageInfo<>(goods);
+
         if (goods.size() > 0) {
-            return Result.build(200, "有数据", goods);
+            return Result.build(200, "有数据", goodsPageInfo);
         }else if(goods.size() == 0){
             return Result.build(400,"没有数据");
         }else {

@@ -1,7 +1,11 @@
 package com.xiewende.creativehomesuppliescity.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xiewende.creativehomesuppliescity.pojo.OrderCart;
+import com.xiewende.creativehomesuppliescity.pojo.Style;
 import com.xiewende.creativehomesuppliescity.service.OrderCartService;
+import com.xiewende.creativehomesuppliescity.utils.ConstantProperties;
 import com.xiewende.creativehomesuppliescity.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -31,6 +35,8 @@ public class OrderCartController {
 
     @Autowired
     RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private ConstantProperties constantProperties;
 
     //添加
     @ApiOperation("添加购物车")
@@ -127,15 +133,20 @@ public class OrderCartController {
     @ApiOperation("查询全部购物车")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "需要查询该用户的购物车，该用户的id，一般就是登录的用户id", required = true,
-                    dataType = "int", paramType = "query")
+                    dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "pageNum", value = "查询页码", required = true,
+                    dataType = "Int", paramType = "query",defaultValue = "1")
     })
-    public Result listAllOrderCartByUser(Integer userId){
+    public Result listAllOrderCartByUser(Integer userId,Integer pageNum){
 
+        //分页
+        PageHelper.startPage(pageNum,constantProperties.getPageSize());
         //执行查询
         List<OrderCart> OrderCarts = orderCartService.listAllOrderCartByUser(userId);
+        PageInfo<OrderCart> orderCartPageInfo = new PageInfo<>(OrderCarts);
 
         if (OrderCarts.size() > 0) {
-            return Result.build(200, "有数据", OrderCarts);
+            return Result.build(200, "有数据", orderCartPageInfo);
         }else if(OrderCarts.size() == 0){
             return Result.build(400,"您的购物车为空");
         }else {

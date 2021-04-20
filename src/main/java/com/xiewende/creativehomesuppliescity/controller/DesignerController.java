@@ -1,8 +1,11 @@
 package com.xiewende.creativehomesuppliescity.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.xiewende.creativehomesuppliescity.pojo.Designer;
 import com.xiewende.creativehomesuppliescity.pojo.Style;
+import com.xiewende.creativehomesuppliescity.pojo.User;
 import com.xiewende.creativehomesuppliescity.service.DesignerService;
 import com.xiewende.creativehomesuppliescity.service.StyleService;
 import com.xiewende.creativehomesuppliescity.utils.ConstantProperties;
@@ -197,7 +200,7 @@ public class DesignerController {
     //查询全部
     //查询全部用户，若输入了名字则模糊查询，若没有则查询全部
     @PostMapping("/listDesigner")
-    @ApiOperation("条件查询全部设计师")
+    @ApiOperation("条件查询全部设计师（不带分页，供其他选择设计师使用）")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "professionalTitle", value = "设计师职称",
                     dataType = "string", paramType = "query"),
@@ -214,6 +217,38 @@ public class DesignerController {
 
         if (designers.size() > 0) {
             return Result.build(200, "有数据", designers);
+        }else if(designers.size() == 0){
+            return Result.build(400,"=没有数据");
+        }else {
+            return Result.build(500, "系统错误！！");
+        }
+    }
+
+
+    //查询全部
+    //查询全部用户，若输入了名字则模糊查询，若没有则查询全部
+    @PostMapping("/listDesignerByPage")
+    @ApiOperation("条件查询全部设计师（带分页，查询全部展示使用）")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "professionalTitle", value = "设计师职称",
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "设计师风格",
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "pageNum", value = "查询页码", required = true,
+                    dataType = "Int", paramType = "query",defaultValue = "1")
+    })
+    public Result listDesignerByPage(String professionalTitle, String type,Integer pageNum){
+
+        if("".equals(professionalTitle))professionalTitle = null;
+        if("".equals(type)) type = null;
+
+        //分页
+        PageHelper.startPage(pageNum,constantProperties.getPageSize());
+        //执行查询
+        List<Designer> designers = designerService.listDesigner(professionalTitle, type);
+        PageInfo<Designer> designerPageInfo = new PageInfo<>(designers);
+        if (designers.size() > 0) {
+            return Result.build(200, "有数据", designerPageInfo);
         }else if(designers.size() == 0){
             return Result.build(400,"=没有数据");
         }else {

@@ -1,8 +1,12 @@
 package com.xiewende.creativehomesuppliescity.controller;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xiewende.creativehomesuppliescity.pojo.Myorder;
+import com.xiewende.creativehomesuppliescity.pojo.OrderCart;
 import com.xiewende.creativehomesuppliescity.service.OrderService;
+import com.xiewende.creativehomesuppliescity.utils.ConstantProperties;
 import com.xiewende.creativehomesuppliescity.utils.Result;
 import com.xiewende.creativehomesuppliescity.vo.CountPriveVo;
 import com.xiewende.creativehomesuppliescity.vo.MyorderVo;
@@ -36,6 +40,8 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private ConstantProperties constantProperties;
 
     //添加
     @ApiOperation("选择购物车得时候计算总价")
@@ -116,12 +122,16 @@ public class OrderController {
     //管理端查询新的订单
     @PostMapping("/selectNewOrder")
     @ApiOperation("管理端查询新的订单")
-    public Result selectNewOrder(){
-
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "查询页码", required = true,
+                    dataType = "Int", paramType = "query",defaultValue = "1")
+    })
+    public Result selectNewOrder(Integer pageNum){
+        //分页
+        PageHelper.startPage(pageNum,constantProperties.getPageSize());
         List<Myorder> myorders = orderService.selectNewOrder();
-
+        PageInfo<Myorder> myorderPageInfo = new PageInfo<>(myorders);
         if(myorders.size() == 0) return Result.build(400, "没有新的订单");
-
         //封装一下给前端展示
         ArrayList<MyorderVo> myorderVoList = new ArrayList<>();
         for(Myorder myorder : myorders){
@@ -162,7 +172,11 @@ public class OrderController {
             // add list
             myorderVoList.add(myorderVo);
         }
-        return Result.build(200, "有数据", myorderVoList);
+
+        PageInfo<MyorderVo> myorderPageInfo1 = new PageInfo<>(myorderVoList);
+        BeanUtils.copyProperties(myorderPageInfo,myorderPageInfo1); // 注意导入的包不一样，顺序不一样
+        myorderPageInfo1.setList(myorderVoList);
+        return Result.build(200, "有数据", myorderPageInfo1);
     }
 
     //管理员查询全部订单，根据用户名，状态查询条件
@@ -173,17 +187,20 @@ public class OrderController {
                     dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "statusName", value = "状态名字",
                     dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "pageNum", value = "查询页码", required = true,
+                    dataType = "Int", paramType = "query",defaultValue = "1")
     })
-    public Result selectOrderWithDemand(String userName, String statusName){
+    public Result selectOrderWithDemand(Integer pageNum,String userName, String statusName){
 
         if("".equals(userName)) userName = null;
         if("".equals(statusName)) statusName = null;
 
+        //分页
+        PageHelper.startPage(pageNum,constantProperties.getPageSize());
         //执行查询
         List<Myorder> myorders = orderService.selectOrderWithDemand(userName, statusName);
-
+        PageInfo<Myorder> myorderPageInfo = new PageInfo<>(myorders);
         if(myorders.size() == 0) return Result.build(400, "没有订单");
-
         //封装一下给前端展示
         ArrayList<MyorderVo> myorderVoList = new ArrayList<>();
         for(Myorder myorder : myorders) {
@@ -224,7 +241,11 @@ public class OrderController {
             // add list
             myorderVoList.add(myorderVo);
         }
-        return Result.build(200, "有数据", myorderVoList);
+
+        PageInfo<MyorderVo> myorderPageInfo1 = new PageInfo<>(myorderVoList);
+        BeanUtils.copyProperties(myorderPageInfo,myorderPageInfo1); // 注意导入的包不一样，顺序不一样
+        myorderPageInfo1.setList(myorderVoList);
+        return Result.build(200, "有数据", myorderPageInfo1);
     }
 
     //根据id查询一个

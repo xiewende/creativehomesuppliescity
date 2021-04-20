@@ -1,8 +1,12 @@
 package com.xiewende.creativehomesuppliescity.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.xiewende.creativehomesuppliescity.pojo.Designer;
 import com.xiewende.creativehomesuppliescity.pojo.Style;
 import com.xiewende.creativehomesuppliescity.pojo.User;
 import com.xiewende.creativehomesuppliescity.service.StyleService;
+import com.xiewende.creativehomesuppliescity.utils.ConstantProperties;
 import com.xiewende.creativehomesuppliescity.utils.MD5Utils;
 import com.xiewende.creativehomesuppliescity.utils.Result;
 import com.xiewende.creativehomesuppliescity.utils.UploadFileUtil;
@@ -36,6 +40,8 @@ public class StyleController {
 
     @Autowired
     private StyleService styleService;
+    @Autowired
+    private ConstantProperties constantProperties;
 
     //添加
     @ApiOperation("添加风格")
@@ -113,7 +119,7 @@ public class StyleController {
     //查询全部
     //查询全部用户，若输入了名字则模糊查询，若没有则查询全部
     @PostMapping("/listAllStyle")
-    @ApiOperation("查询全部风格")
+    @ApiOperation("查询全部风格（不带分页，供其他选择风格使用）")
     public Result listAllStyle(){
 
         //执行查询
@@ -122,11 +128,38 @@ public class StyleController {
         if (styles.size() > 0) {
             return Result.build(200, "有数据", styles);
         }else if(styles.size() == 0){
-            return Result.build(400,"=没有数据");
+            return Result.build(400,"没有数据");
         }else {
             return Result.build(500, "系统错误！！");
         }
     }
+
+
+    //查询全部
+    //查询全部用户，若输入了名字则模糊查询，若没有则查询全部
+    @PostMapping("/listAllStyleByPage")
+    @ApiOperation("查询全部风格（分页，供展示的时候）")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "查询页码", required = true,
+                    dataType = "Int", paramType = "query",defaultValue = "1")
+    })
+    public Result listAllStyleByPage(Integer pageNum){
+
+        //分页
+        PageHelper.startPage(pageNum,constantProperties.getPageSize());
+        //执行查询
+        List<Style> styles = styleService.listAllStyle();
+        PageInfo<Style> stylePageInfo = new PageInfo<>(styles);
+
+        if (styles.size() > 0) {
+            return Result.build(200, "有数据", stylePageInfo);
+        }else if(styles.size() == 0){
+            return Result.build(400,"没有数据");
+        }else {
+            return Result.build(500, "系统错误！！");
+        }
+    }
+
 
     //根据id查询一个
     //根据id查询某一位用户

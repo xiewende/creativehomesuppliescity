@@ -72,7 +72,7 @@
   <select id="selectIdOfLikeStyleName" resultType="java.lang.Integer">
         select id
         from style
-        where  type_name Like  "%"#{styleName}"%";
+        where  type_name Like  "%"#{styleName}"%"
     </select>
 
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiewende.creativehomesuppliescity.pojo.StyleExample" >

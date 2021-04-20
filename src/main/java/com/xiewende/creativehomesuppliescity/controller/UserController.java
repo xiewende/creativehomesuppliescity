@@ -98,17 +98,22 @@ public class UserController {
     @ApiOperation("按照名字模糊查询用户，若没有输入则查询全部")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "模糊查询的用户名，没有填写则查询全部",
-                    dataType = "string", paramType = "query")
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "pageNum", value = "查询页码", required = true,
+                    dataType = "Int", paramType = "query",defaultValue = "1")
     })
-    public Result listUserOrName(String userName){
+    public Result listUserOrName(String userName,Integer pageNum){
         //特例判断
         if("".equals(userName)) userName = null;
 
+        //分页
+        PageHelper.startPage(pageNum,properties.getPageSize());
         //执行查询
         List<User> users = userService.listUserOrName(userName);
+        PageInfo<User> userPageInfo = new PageInfo<>(users);
 
         if (users.size() > 0) {
-            return Result.build(200, "有数据", users);
+            return Result.build(200, "有数据", userPageInfo);
         }else if(users.size() == 0){
             return Result.build(400,"=没有数据");
         }else {

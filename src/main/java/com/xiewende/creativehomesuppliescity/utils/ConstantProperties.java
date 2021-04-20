@@ -33,6 +33,17 @@ public class ConstantProperties {
     @Value("${com.xiewende.defalt.admin.password}")
     private String adminPassword;
 
+    @Value("${com.xiewende.defalt.pageSize}")
+    private Integer pageSize;
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
     public String getAdminName() {
         return adminName;
     }

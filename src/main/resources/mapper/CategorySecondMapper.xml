@@ -72,7 +72,7 @@
   <select id="selectIdOfLikeCategoryName" resultType="java.lang.Integer">
         select id
         from category_second
-        where  category_name Like  "%"#{categorySecondName}"%";
+        where  category_name Like  "%"#{categorySecondName}"%"
     </select>
 
   <select id="selectIdOfLikeFirstName" resultType="java.lang.Integer">

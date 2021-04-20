@@ -1,9 +1,12 @@
 package com.xiewende.creativehomesuppliescity.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xiewende.creativehomesuppliescity.pojo.Brand;
 import com.xiewende.creativehomesuppliescity.pojo.Style;
 import com.xiewende.creativehomesuppliescity.service.BrandService;
 import com.xiewende.creativehomesuppliescity.service.StyleService;
+import com.xiewende.creativehomesuppliescity.utils.ConstantProperties;
 import com.xiewende.creativehomesuppliescity.utils.Result;
 import com.xiewende.creativehomesuppliescity.vo.BrandVo;
 import io.swagger.annotations.Api;
@@ -31,6 +34,9 @@ public class BrandController {
 
     @Autowired
     private BrandService brandService;
+
+    @Autowired
+    private ConstantProperties constantProperties;
 
     //添加
     @ApiOperation("添加品牌")
@@ -118,7 +124,7 @@ public class BrandController {
     //查询全部
     //查询全部用户，若输入了名字则模糊查询，若没有则查询全部
     @PostMapping("/listAllBrand")
-    @ApiOperation("查询全部品牌")
+    @ApiOperation("查询全部品牌（不带分页，供其他选择品牌使用）")
     public Result listAllBrand(){
 
         //执行查询
@@ -131,6 +137,32 @@ public class BrandController {
             return Result.build(500, "系统错误！！");
         }
     }
+
+
+    //查询全部
+    //查询全部用户，若输入了名字则模糊查询，若没有则查询全部
+    @PostMapping("/listAllBrandByPage")
+    @ApiOperation("查询全部品牌（分页，供展示的时候）")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "查询页码", required = true,
+                    dataType = "Int", paramType = "query",defaultValue = "1")
+    })
+    public Result listAllBrandByPage(Integer pageNum){
+
+        //分页
+        PageHelper.startPage(pageNum,constantProperties.getPageSize());
+        //执行查询
+        List<Brand> brands = brandService.listAllBrand();
+        PageInfo<Brand> brandPageInfo = new PageInfo<>(brands);
+        if (brands.size() > 0) {
+            return Result.build(200, "有数据", brandPageInfo);
+        }else if(brands.size() == 0){
+            return Result.build(400,"=没有数据");
+        }else {
+            return Result.build(500, "系统错误！！");
+        }
+    }
+
 
     //根据id查询一个
     //根据id查询某一位用户

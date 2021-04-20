@@ -73,7 +73,7 @@
   <select id="selectIdOfLikeBrandName" resultType="java.lang.Integer">
         select id
         from brand
-        where  brand_name Like  "%"#{brandName}"%";
+        where  brand_name Like  "%"#{brandName}"%"
     </select>
 
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiewende.creativehomesuppliescity.pojo.BrandExample" >

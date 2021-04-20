@@ -74,22 +74,23 @@ class CreativehomesuppliescityApplicationTests {
     //模糊查询id
     @Test
     void test3(){
-       /* List<Integer> list = categorySecondMapper.selectIdOfLikeCategoryName("电");
+        List<Integer> list = categorySecondMapper.selectIdOfLikeCategoryName("电");
         System.out.println(list.toString());
 
-        List<Integer> list1 = styleMapper.selectIdOfLikeStyleName("风");
+        String str = "工业";
+        List<Integer> list1 = styleMapper.selectIdOfLikeStyleName(str);
         System.out.println(list1.toString());
 
         List<Integer> list2 = brandMapper.selectIdOfLikeBrandName("具");
         System.out.println(list2.toString());
 
         List<Integer> list3 = categorySecondMapper.selectIdOfLikeFirstName("客");
-        System.out.println(list3.toString());*/
-        List<Integer> list = userMapper.selectIdOfLikeUserName("王");
+        System.out.println(list3.toString());
+       /* List<Integer> list = userMapper.selectIdOfLikeUserName("王");
         System.out.println(list.toString());
 
         List<Integer> list1 = goodsMapper.selectIdOfLikeGoodName("餐");
-        System.out.println(list1.toString());
+        System.out.println(list1.toString());*/
 
     }
 
