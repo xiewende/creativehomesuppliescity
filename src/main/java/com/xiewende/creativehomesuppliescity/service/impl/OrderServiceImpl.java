@@ -59,8 +59,12 @@ public class OrderServiceImpl implements OrderService {
         else myorder.setPayType(3);
         double totalPrice = 0;
         for(Integer id : orderCartIdList){
+            //就算总价和删除购物车的这一项
             OrderCart orderCart = orderCartMapper.selectByPrimaryKey(id);
             totalPrice += orderCart.getTotalPrice();
+            //删除
+            orderCart.setIsdelete(1);
+            orderCartMapper.updateByPrimaryKey(orderCart);
         }
         myorder.setPayPrice(totalPrice);
         //物流  管理员点击发货的时候填充的

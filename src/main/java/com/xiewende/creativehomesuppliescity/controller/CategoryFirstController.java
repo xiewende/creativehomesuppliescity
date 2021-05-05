@@ -95,13 +95,13 @@ public class CategoryFirstController {
     }
 
     //删除
-    @PostMapping("/deeteCategoryFirst")
+    @PostMapping("/deleteCategoryFirst")
     @ApiOperation("删除某一个一级分类")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "需要被删除的一级分类id", required = true,
                     dataType = "int", paramType = "query")
     })
-    public Result deeteCategoryFirst(Integer id){
+    public Result deleteCategoryFirst(Integer id){
         if(id == null ) return Result.build(400,"数据不可以为空");
         Integer integer = categoryFirstService.deeteCategoryFirst(id);
         if (integer > 0) {

@@ -52,9 +52,9 @@ public class UserController {
             @ApiImplicitParam(name = "id", value = "需要被修改密码的用户id", required = true,
                     dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "oldPassword", value = "旧密码", required = true,
-                    dataType = "string", paramType = "query",defaultValue = "1"),
+                    dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "newPassword", value = "新密码", required = true,
-                    dataType = "string", paramType = "query",defaultValue = "1")
+                    dataType = "string", paramType = "query")
     })
     public Result updatePassword(Integer id, String oldPassword, String newPassword){
 

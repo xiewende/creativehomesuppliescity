@@ -24,7 +24,7 @@ import java.util.List;
 @Api(tags = "CategorySecond(4)",description = "商品二级分类管理接口")
 @RestController
 @CrossOrigin
-@RequestMapping("/ategocrySecond")
+@RequestMapping("/categorySecond")
 public class CategorySecondController {
 
     @Autowired

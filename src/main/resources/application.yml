@@ -34,8 +34,7 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
-#裁判图片位置
-file-save-path: D:\images\
+
 
 #图片服务器
 fdfs:

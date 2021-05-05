@@ -137,7 +137,7 @@ public class OrderController {
         for(Myorder myorder : myorders){
             MyorderVo myorderVo = new MyorderVo();
             BeanUtils.copyProperties(myorder,myorderVo); // 注意导入的包不一样，顺序不一样
-            //其余不可直接复制
+            //其余不可直接复制,需要在这逐一复制
             myorderVo.setUserName(myorder.getUser().getUserName());
             if(myorder.getCreateTime() != null){
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -185,7 +185,7 @@ public class OrderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "下单人名字",
                     dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "statusName", value = "状态名字",
+            @ApiImplicitParam(name = "statusName", value = "状态名字（等待发货，已发货，已经收货）",
                     dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "pageNum", value = "查询页码", required = true,
                     dataType = "Int", paramType = "query",defaultValue = "1")
@@ -200,6 +200,7 @@ public class OrderController {
         //执行查询
         List<Myorder> myorders = orderService.selectOrderWithDemand(userName, statusName);
         PageInfo<Myorder> myorderPageInfo = new PageInfo<>(myorders);
+
         if(myorders.size() == 0) return Result.build(400, "没有订单");
         //封装一下给前端展示
         ArrayList<MyorderVo> myorderVoList = new ArrayList<>();
@@ -241,7 +242,7 @@ public class OrderController {
             // add list
             myorderVoList.add(myorderVo);
         }
-
+        //分页
         PageInfo<MyorderVo> myorderPageInfo1 = new PageInfo<>(myorderVoList);
         BeanUtils.copyProperties(myorderPageInfo,myorderPageInfo1); // 注意导入的包不一样，顺序不一样
         myorderPageInfo1.setList(myorderVoList);
