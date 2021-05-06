@@ -25,6 +25,43 @@ public class FinnishProgram {
 
     private Integer isdelete;
 
+    private User user;
+    private Designer designer;
+    private String createTimeStr;
+    private String finishTimeStr;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Designer getDesigner() {
+        return designer;
+    }
+
+    public void setDesigner(Designer designer) {
+        this.designer = designer;
+    }
+
+    public String getCreateTimeStr() {
+        return createTimeStr;
+    }
+
+    public void setCreateTimeStr(String createTimeStr) {
+        this.createTimeStr = createTimeStr;
+    }
+
+    public String getFinishTimeStr() {
+        return finishTimeStr;
+    }
+
+    public void setFinishTimeStr(String finishTimeStr) {
+        this.finishTimeStr = finishTimeStr;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -1,5 +1,7 @@
 package com.xiewende.creativehomesuppliescity.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.xiewende.creativehomesuppliescity.pojo.Program;
 import com.xiewende.creativehomesuppliescity.service.ProgramService;
@@ -251,5 +253,92 @@ public class ProgramController {
             return Result.build(500, "系统错误！！！");
         }
     }
+
+
+    //查询全部
+    //管理员查询全部的设计方案
+    @PostMapping("/adminSelectAllProgram")
+    @ApiOperation("管理员查询全部的设计方案，选择条件模糊查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "goodsName", value = "设计的商品名称",
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "designerName", value = "完成商品设计的设计师名字",
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "userName", value = "请求设计的用户名字",
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "pageNum", value = "查询页码", required = true,
+                    dataType = "Int", paramType = "query",defaultValue = "1")
+    })
+    public Result adminSelectAllProgram(String goodsName,String designerName,String userName,Integer pageNum){
+        //特例判断
+        if("".equals(goodsName)) goodsName = null;
+        if("".equals(designerName)) designerName = null;
+        if("".equals(userName)) userName = null;
+
+        //分页
+        PageHelper.startPage(pageNum,1);
+
+        //执行查询
+        List<Program> programs = programService.adminSelectAllProgram(goodsName,designerName,userName);
+        PageInfo<Program> programPageInfo = new PageInfo<>(programs);
+
+        if(programs.size() == 0) return Result.build(400,"没有数据");
+
+        //封装给前端
+        List<ProgramVo> programVos = new ArrayList<>();
+        for(Program program :programs) {
+            ProgramVo programVo = new ProgramVo();
+            BeanUtils.copyProperties(program,programVo); // 注意导入的包不一样，顺序不一样
+            if(program.getCreateTime() != null){
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String dateString = formatter.format(program.getCreateTime());
+                programVo.setCreateTimeStr(dateString);
+            }
+            if(program.getFinishTime() != null){
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String dateString = formatter.format(program.getFinishTime());
+                programVo.setFinishTimeStr(dateString);
+            }
+
+            if(program.getStatus() == 0) programVo.setStatusStr("请求提交成功");
+            else if(program.getStatus() == 1) programVo.setStatusStr("完成设计");
+
+            if(program.getIsAccept() != null){
+                if(program.getIsAccept() == 0) programVo.setIsAcceptStr("用户没有接受此设计");
+                else if(program.getIsAccept() == 1) programVo.setIsAcceptStr("用户已经接受此设计");
+            }
+            programVos.add(programVo);
+        }
+
+        PageInfo<ProgramVo> programPageInfo1 = new PageInfo<>(programVos);
+        BeanUtils.copyProperties(programPageInfo,programPageInfo1); // 注意导入的包不一样，顺序不一样
+        programPageInfo1.setList(programVos);
+
+        if (programs.size() > 0) {
+            return Result.build(200,"有数据",programPageInfo1);
+        }else {
+            return Result.build(500, "系统错误！！！");
+        }
+    }
+
+    //若完成后可以选择删除某一个成功案例
+    @ApiOperation("若完成后可以选择删除定制内容")
+    @PostMapping("/delectProgram")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "定制id", required = true,
+                    dataType = "", paramType = "query"),
+    })
+    public Result delectProgram(Integer id){
+        //1、判断是否为空
+        if(id == null || "".equals(id)) return Result.build(400,"数据不可以为空");
+        //确定删除
+        Integer integer = programService.deeleteProgram(id);
+        if (integer > 0) {
+            return Result.ok();
+        }else {
+            return Result.build(500, "系统错误！！！");
+        }
+    }
+
 
 }

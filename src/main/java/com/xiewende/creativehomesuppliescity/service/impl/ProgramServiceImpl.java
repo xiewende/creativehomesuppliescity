@@ -117,4 +117,44 @@ public class ProgramServiceImpl implements ProgramService {
         program.setStatus(1); // 完成设计
         return programMapper.updateByPrimaryKey(program);
     }
+
+    @Override
+    public List<Program> adminSelectAllProgram(String goodsName, String designerName, String userName) {
+        ProgramExample programExample = new ProgramExample();
+        ProgramExample.Criteria criteria = programExample.createCriteria();
+        criteria.andIsdeleteEqualTo(0);
+
+        //模糊查询的过程
+        if(goodsName != null){
+            criteria.andGoodNameLike("%"+goodsName+"%");
+        }
+
+        if(designerName != null){
+            List<Integer> list = designerMapper.selectIdOfLikeDesignerName(designerName);
+            if(list.size()!=0) criteria.andDesignerIdIn(list);
+        }
+
+        if(userName != null){
+            List<Integer> list1 = userMapper.selectIdOfLikeUserName(userName);
+            if(list1.size()!=0) criteria.andUserIdIn(list1);
+        }
+
+        //执行查询
+        List<Program> programs = programMapper.selectByExample(programExample);
+
+        //封装设计师 and 用户
+        for(Program program : programs){
+            program.setUser(userMapper.selectByPrimaryKey(program.getUserId()));
+            program.setDesigner(designerMapper.selectByPrimaryKey(program.getDesignerId()));
+        }
+
+        return programs;
+    }
+
+    @Override
+    public Integer deeleteProgram(Integer id) {
+        Program program = programMapper.selectByPrimaryKey(id);
+        program.setIsdelete(1);
+        return programMapper.updateByPrimaryKey(program);
+    }
 }

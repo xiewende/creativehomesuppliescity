@@ -3,12 +3,14 @@ package com.xiewende.creativehomesuppliescity.service.impl;
 import com.sun.xml.internal.bind.v2.TODO;
 import com.xiewende.creativehomesuppliescity.mapper.DesignerMapper;
 import com.xiewende.creativehomesuppliescity.mapper.FinnishProgramMapper;
+import com.xiewende.creativehomesuppliescity.mapper.UserMapper;
 import com.xiewende.creativehomesuppliescity.pojo.*;
 import com.xiewende.creativehomesuppliescity.service.DesignerService;
 import com.xiewende.creativehomesuppliescity.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -21,6 +23,8 @@ public class DesignerServiceImpl implements DesignerService {
     private DesignerMapper designerMapper;
     @Autowired
     private FinnishProgramMapper finnishProgramMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public Integer InsertDesigner(Designer designer) {
@@ -87,6 +91,21 @@ public class DesignerServiceImpl implements DesignerService {
         FinnishProgramExample.Criteria criteria = finnishProgramExample.createCriteria();
         criteria.andDesignerIdEqualTo(designer.getId());
         List<FinnishProgram> finnishPrograms = finnishProgramMapper.selectByExample(finnishProgramExample);
+        //封装用户h
+        for(FinnishProgram finnishProgram : finnishPrograms){
+            finnishProgram.setUser(userMapper.selectByPrimaryKey(finnishProgram.getUserId()));
+            //两个时间
+            if (finnishProgram.getCreateTime() != null) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String dateString = formatter.format(finnishProgram.getCreateTime());
+                finnishProgram.setCreateTimeStr(dateString);
+            }
+            if (finnishProgram.getFinishTime() != null) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String dateString1 = formatter.format(finnishProgram.getFinishTime());
+                finnishProgram.setFinishTimeStr(dateString1);
+            }
+        }
         designer.setFinnishProgramList(finnishPrograms);
 
         return designer;

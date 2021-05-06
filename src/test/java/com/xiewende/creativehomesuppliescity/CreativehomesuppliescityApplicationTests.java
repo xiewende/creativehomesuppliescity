@@ -35,6 +35,9 @@ class CreativehomesuppliescityApplicationTests {
     @Autowired
     private GoodsMapper goodsMapper;
 
+    @Autowired
+    private DesignerMapper designerMapper;
+
 
 
 
@@ -74,7 +77,7 @@ class CreativehomesuppliescityApplicationTests {
     //模糊查询id
     @Test
     void test3(){
-        List<Integer> list = categorySecondMapper.selectIdOfLikeCategoryName("电");
+  /*      List<Integer> list = categorySecondMapper.selectIdOfLikeCategoryName("电");
         System.out.println(list.toString());
 
         String str = "工业";
@@ -85,12 +88,16 @@ class CreativehomesuppliescityApplicationTests {
         System.out.println(list2.toString());
 
         List<Integer> list3 = categorySecondMapper.selectIdOfLikeFirstName("客");
-        System.out.println(list3.toString());
+        System.out.println(list3.toString());*/
        /* List<Integer> list = userMapper.selectIdOfLikeUserName("王");
         System.out.println(list.toString());
 
         List<Integer> list1 = goodsMapper.selectIdOfLikeGoodName("餐");
         System.out.println(list1.toString());*/
+
+        List<Integer> list = designerMapper.selectIdOfLikeDesignerName("hh");
+        System.out.println(list.size());
+        System.out.println(list.toString());
 
     }
 

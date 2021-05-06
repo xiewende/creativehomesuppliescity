@@ -79,6 +79,13 @@
     id, designer_name, password, iphone, gender, email, image, professional_title, design_concept, 
     type, time, college, popularity, isDelete
   </sql>
+
+  <select id="selectIdOfLikeDesignerName" resultType="java.lang.Integer">
+        select id
+        from designer
+        where  designer_name Like  "%"#{designerName}"%"
+    </select>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiewende.creativehomesuppliescity.pojo.DesignerExample" >
     select
     <if test="distinct" >

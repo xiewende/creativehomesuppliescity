@@ -26,4 +26,10 @@ public interface ProgramService {
 
     //设计师完成设计,提交设计图等
     public Integer finishThisProgram(Integer id,String finishPic,String finishIdea);
+
+    //管理员查询全部的设计方案
+    public List<Program> adminSelectAllProgram(String goodsName,String designerName,String userName);
+
+    //管理员删除某一个定制
+    public Integer deeleteProgram(Integer id);
 }

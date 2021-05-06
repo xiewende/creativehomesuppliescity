@@ -8,6 +8,9 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface DesignerMapper {
+
+    List<Integer> selectIdOfLikeDesignerName(String designerName);
+
     int countByExample(DesignerExample example);
 
     int deleteByExample(DesignerExample example);
