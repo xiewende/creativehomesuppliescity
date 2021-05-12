@@ -114,10 +114,15 @@ public class CategorySecondController {
     //查询全部
     @PostMapping("/listAllCategorySecond")
     @ApiOperation("查询全部二级分类")
-    public Result listAllCategorySecond(){
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "firstId", value = "一级分类id",
+                    dataType = "int", paramType = "query")
+    })
+    public Result listAllCategorySecond(Integer firstId){
 
+        if("".equals(firstId)) firstId = null;
         //执行查询
-        List<CategorySecond> categorySeconds = categorySecondService.listAllCategorySecond();
+        List<CategorySecond> categorySeconds = categorySecondService.listAllCategorySecond(firstId);
         if (categorySeconds.size() > 0) {
             return Result.build(200, "有数据", categorySeconds);
         }else if(categorySeconds.size() == 0){

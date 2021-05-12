@@ -71,10 +71,11 @@ public class CategorySecondServiceImpl implements CategorySecondService {
     }
 
     @Override
-    public List<CategorySecond> listAllCategorySecond() {
+    public List<CategorySecond> listAllCategorySecond(Integer firstId) {
         CategorySecondExample categorySecondExample = new CategorySecondExample();
         CategorySecondExample.Criteria criteria = categorySecondExample.createCriteria();
         criteria.andIsdeleteEqualTo(0);
+        if(firstId != null) criteria.andCategoryFirstIdEqualTo(firstId);
         List<CategorySecond> categorySeconds = categorySecondMapper.selectByExample(categorySecondExample);
         //封装一级分类
         for(CategorySecond categorySecond:categorySeconds){

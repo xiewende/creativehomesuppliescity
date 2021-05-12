@@ -71,6 +71,7 @@ public class OrderCartServiceImpl implements OrderCartService {
         OrderCartExample orderCartExample = new OrderCartExample();
         OrderCartExample.Criteria criteria = orderCartExample.createCriteria();
         criteria.andUserIdEqualTo(userId);
+        criteria.andIsdeleteEqualTo(0);//没有删除
         List<OrderCart> orderCarts = orderCartMapper.selectByExample(orderCartExample);
         //封装一下商品的信息
         for(OrderCart orderCart : orderCarts){

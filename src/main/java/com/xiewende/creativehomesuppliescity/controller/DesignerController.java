@@ -250,7 +250,7 @@ public class DesignerController {
         if (designers.size() > 0) {
             return Result.build(200, "有数据", designerPageInfo);
         }else if(designers.size() == 0){
-            return Result.build(400,"=没有数据");
+            return Result.build(400,"没有数据");
         }else {
             return Result.build(500, "系统错误！！");
         }

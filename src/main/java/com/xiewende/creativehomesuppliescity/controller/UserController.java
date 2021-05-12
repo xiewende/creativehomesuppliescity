@@ -103,6 +103,9 @@ public class UserController {
                     dataType = "Int", paramType = "query",defaultValue = "1")
     })
     public Result listUserOrName(String userName,Integer pageNum){
+
+        System.out.println("pageNum="+pageNum);
+
         //特例判断
         if("".equals(userName)) userName = null;
 
@@ -115,7 +118,7 @@ public class UserController {
         if (users.size() > 0) {
             return Result.build(200, "有数据", userPageInfo);
         }else if(users.size() == 0){
-            return Result.build(400,"=没有数据");
+            return Result.build(400,"没有数据");
         }else {
             return Result.build(500, "系统错误！！");
         }

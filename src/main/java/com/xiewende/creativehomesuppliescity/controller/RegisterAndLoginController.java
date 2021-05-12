@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +49,7 @@ public class RegisterAndLoginController {
     private LoginService loginService;
 
     @ApiOperation("hello")
-    @PostMapping("/hello")
+    @RequestMapping("/hello")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "idList", value = "id集合", required = true,
                     dataType = "string", paramType = "query"),
@@ -65,7 +66,6 @@ public class RegisterAndLoginController {
     //用户注册
     @ApiOperation("用户注册")
     @PostMapping("/register")
-
     @ApiImplicitParams({
             @ApiImplicitParam(name = "affirmPassword", value = "确认密码",
                     dataType = "string", paramType = "query")
@@ -165,7 +165,7 @@ public class RegisterAndLoginController {
             User user = loginService.userLogin(name, password);
             if(user == null) return Result.build(400, "用户账户或者密码错误！！！");
             //存到redis
-            redisTemplate.opsForValue().set("user", "user", 30 * 60, TimeUnit.SECONDS);
+            redisTemplate.opsForValue().set("user", "user", 60 * 60 * 24, TimeUnit.SECONDS);
             return Result.build(200, "登陆成功！！！", user);
         }
         //设计师
@@ -180,7 +180,7 @@ public class RegisterAndLoginController {
             Integer integer = loginService.adminLogin(name, password);
             if(integer == 0) return Result.build(400, "用户账户或者密码错误！！！");
             redisTemplate.opsForValue().set("user", "user", 30 * 60, TimeUnit.SECONDS);
-            return Result.ok();
+            return Result.build(200, "登陆成功！！！", "admin");
         }
     }
 
