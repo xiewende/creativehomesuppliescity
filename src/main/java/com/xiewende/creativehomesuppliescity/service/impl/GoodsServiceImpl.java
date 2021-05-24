@@ -1,11 +1,13 @@
 package com.xiewende.creativehomesuppliescity.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.xiewende.creativehomesuppliescity.mapper.BrandMapper;
 import com.xiewende.creativehomesuppliescity.mapper.CategorySecondMapper;
 import com.xiewende.creativehomesuppliescity.mapper.GoodsMapper;
 import com.xiewende.creativehomesuppliescity.mapper.StyleMapper;
 import com.xiewende.creativehomesuppliescity.pojo.*;
 import com.xiewende.creativehomesuppliescity.service.GoodsService;
+import com.xiewende.creativehomesuppliescity.utils.ConstantProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,9 @@ public class GoodsServiceImpl implements GoodsService {
     private StyleMapper styleMapper;
     @Autowired
     private BrandMapper brandMapper;
+
+    @Autowired
+    private ConstantProperties constantProperties;
 
     @Override
     //不考虑重复的问题
@@ -83,7 +88,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public List<Goods> listGoodsWithSomeDemand(String categoryFirstName,String categorySecondName, String stypeName, String brandName, String goodName) {
+    public List<Goods> listGoodsWithSomeDemand(String categoryFirstName,String categorySecondName, String stypeName, String brandName, String goodName,Integer pageNum) {
         GoodsExample goodsExample = new GoodsExample();
         GoodsExample.Criteria criteria = goodsExample.createCriteria();
         criteria.andIsdeleteEqualTo(0);
@@ -95,11 +100,14 @@ public class GoodsServiceImpl implements GoodsService {
         //若有二级分类查询二级分类，若没有查询一级分类下的全部
         if(categorySecondName!=null) {
             List<Integer> list = categorySecondMapper.selectIdOfLikeCategoryName(categorySecondName);
-            criteria.andCategoryIdIn(list);
+            if(list.size()>0) criteria.andCategoryIdIn(list);
+            else return null;
+
         }else {  //二级为空，采取一级
             if(categoryFirstName!=null){
                 List<Integer> list4 = categorySecondMapper.selectIdOfLikeFirstName(categoryFirstName);
-                criteria.andCategoryIdIn(list4);
+                if(list4.size()>0)criteria.andCategoryIdIn(list4);
+                else return null;
             }
         }
         if(stypeName != null){
@@ -110,6 +118,7 @@ public class GoodsServiceImpl implements GoodsService {
             List<Integer> list2 = brandMapper.selectIdOfLikeBrandName(brandName);
             criteria.andBrandIdIn(list2);
         }
+        PageHelper.startPage(pageNum,constantProperties.getPageSize());
         List<Goods> goods = goodsMapper.selectByExample(goodsExample);
         //封装其他信息
         for(Goods good : goods){

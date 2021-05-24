@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
         //若存在
         if(userList.size()>0) return 0;
         //若不存在添加
+
         return userMapper.insertSelective(user);
     }
 

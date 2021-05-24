@@ -29,6 +29,9 @@ public class GoodsVo {
     @ApiModelProperty(value = "家居用品库存")
     private Integer store;
 
+    @ApiModelProperty(value = "家居用品图片URL")
+    private String image;
+
     @ApiModelProperty(value = "家居用品所属二级分类名称，点击查询得到")
     private String categorySecondName;
 
@@ -37,6 +40,16 @@ public class GoodsVo {
 
     @ApiModelProperty(value = "家居用品所属品牌名称，点击查询得到")
     private String brandName;
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 
     public String getGoodName() {
         return goodName;

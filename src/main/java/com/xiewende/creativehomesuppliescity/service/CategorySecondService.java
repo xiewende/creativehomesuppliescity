@@ -20,7 +20,7 @@ public interface CategorySecondService {
     public Integer deleteCategorySecond(Integer id);
 
     //查询全部
-    public List<CategorySecond> listAllCategorySecond(Integer firstId);
+    public List<CategorySecond> listAllCategorySecond(String firstId);
 
     //id查
     public CategorySecond findCategorySecondById(Integer id);

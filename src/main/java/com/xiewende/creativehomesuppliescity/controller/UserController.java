@@ -131,14 +131,15 @@ public class UserController {
             @ApiImplicitParam(name = "id", value = "用户id",
                     dataType = "int", paramType = "query")
     })
-    public Result updateUserOther(UserVo user , Integer id , MultipartFile file, HttpServletRequest request){
+    public Result updateUserOther(UserVo user , Integer id){
         //1、判断是否为空
         if(user.getUserName() == null || "".equals(user.getUserName())
                 || user.getPassword() == null || "".equals(user.getPassword())
                 || user.getAddress() == null || "".equals(user.getAddress())
                 || user.getEmail() == null || "".equals(user.getEmail())
                 || user.getSex() == null || "".equals(user.getSex())
-                || user.getIphone() == null || "".equals(user.getIphone()))
+                || user.getIphone() == null || "".equals(user.getIphone())
+                || user.getImage() == null || "".equals(user.getImage()))
         {
             return Result.build(400,"数据不可以为空");
         }
@@ -165,11 +166,11 @@ public class UserController {
 
 
         //头像部分
-        if(file != null && file.getSize() != 0){  //默认头像
+   /*     if(file != null && file.getSize() != 0){  //默认头像
             //更好的做法就是抽出一个方法来，但是有点问题  只能这里很多代码了
             String storePath = UploadFileUtil.upload(file, fastFileStorageClient,properties);
             updateUser.setImage(storePath);
-        }
+        }*/
 
         //修改
         Integer integer = userService.updateOther(updateUser);

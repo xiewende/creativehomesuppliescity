@@ -19,7 +19,6 @@ import java.util.Map;
 public class UploadFileUtil {
 
     public static String upload(MultipartFile file,FastFileStorageClient fastFileStorageClient,ConstantProperties properties) {
-
         int index = file.getOriginalFilename().lastIndexOf(".");//返回指定字符在此字符串中最后一次出现处的索引
         String suffix =file.getOriginalFilename().substring(index+1); //文件后缀名
         //FileInputStream fileInputStream = new FileInputStream(file.getInputStream());

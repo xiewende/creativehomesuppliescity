@@ -48,7 +48,7 @@ public class GoodsController {
     //添加
     @ApiOperation("添加家居用品")
     @PostMapping("/insertGoods")
-    public Result insertGoods(GoodsVo goodsVo, MultipartFile file, HttpServletRequest request){
+    public Result insertGoods(GoodsVo goodsVo){
         //1、判断是否为空
         if(goodsVo.getBrandName() == null || "".equals(goodsVo.getBrandName())
         || goodsVo.getCategorySecondName() == null || "".equals(goodsVo.getCategorySecondName())
@@ -57,8 +57,8 @@ public class GoodsController {
         || goodsVo.getPrice() == null || "".equals(goodsVo.getPrice())
         || goodsVo.getSize() == null || "".equals(goodsVo.getPrice())
         || goodsVo.getStore() == null || "".equals(goodsVo.getStore())
-        || goodsVo.getStyleName() == null || "".equals(goodsVo.getStyleName())
-        || file == null || file.getSize() == 0)
+        || goodsVo.getImage() == null || "".equals(goodsVo.getImage())
+        || goodsVo.getStyleName() == null || "".equals(goodsVo.getStyleName()))
         {
             return Result.build(400,"数据不可以为空");
         }
@@ -78,8 +78,8 @@ public class GoodsController {
         insertGoods.setHitNumber(0);
 
         //图片
-        String storePath = UploadFileUtil.upload(file, fastFileStorageClient,constantProperties);
-        insertGoods.setImage(storePath);
+       /* String storePath = UploadFileUtil.upload(file, fastFileStorageClient,constantProperties);
+        insertGoods.setImage(storePath);*/
 
         //添加
         Integer integer = goodsService.insertGoods(insertGoods,goodsVo.getCategorySecondName(),goodsVo.getStyleName(),goodsVo.getBrandName());
@@ -97,7 +97,7 @@ public class GoodsController {
             @ApiImplicitParam(name = "id", value = "家居用品id",
                     dataType = "int", paramType = "query")
     })
-    public Result updateGoods(GoodsVo goodsVo , Integer id, MultipartFile file, HttpServletRequest request){
+    public Result updateGoods(GoodsVo goodsVo , Integer id){
 
         //1、判断是否为空
         if(goodsVo.getBrandName() == null || "".equals(goodsVo.getBrandName())
@@ -107,8 +107,8 @@ public class GoodsController {
         || goodsVo.getPrice() == null || "".equals(goodsVo.getPrice())
         || goodsVo.getSize() == null || "".equals(goodsVo.getPrice())
         || goodsVo.getStore() == null || "".equals(goodsVo.getStore())
-        || goodsVo.getStyleName() == null || "".equals(goodsVo.getStyleName())
-        || file == null || file.getSize() == 0)
+        || goodsVo.getImage() == null || "".equals(goodsVo.getImage())
+        || goodsVo.getStyleName() == null || "".equals(goodsVo.getStyleName()))
         {
             return Result.build(400,"数据不可以为空");
         }
@@ -125,8 +125,8 @@ public class GoodsController {
         updateGoods.setUpdateTime(new Date());
 
         //图片
-        String storePath = UploadFileUtil.upload(file, fastFileStorageClient,constantProperties);
-        updateGoods.setImage(storePath);
+//        String storePath = UploadFileUtil.upload(file, fastFileStorageClient,constantProperties);
+//        updateGoods.setImage(storePath);
 
         //修改
         Integer integer = goodsService.updateGoods(updateGoods,goodsVo.getCategorySecondName(),goodsVo.getStyleName(),goodsVo.getBrandName());
@@ -182,15 +182,16 @@ public class GoodsController {
         if("".equals(goodName)) goodName = null;
 
         //分页
-        PageHelper.startPage(pageNum,constantProperties.getPageSize());
+        //PageHelper.startPage(pageNum,constantProperties.getPageSize());
         //执行查询
-        List<Goods> goods = goodsService.listGoodsWithSomeDemand(categoryFirstName,categorySecondName, stypeName, brandName, goodName);
+        List<Goods> goods = goodsService.listGoodsWithSomeDemand(categoryFirstName,categorySecondName, stypeName, brandName, goodName,pageNum);
+        if(goods == null || goods.size() == 0 ){
+            return Result.build(400,"没有数据");
+        }
         PageInfo<Goods> goodsPageInfo = new PageInfo<>(goods);
 
         if (goods.size() > 0) {
             return Result.build(200, "有数据", goodsPageInfo);
-        }else if(goods.size() == 0){
-            return Result.build(400,"没有数据");
         }else {
             return Result.build(500, "系统错误！！");
         }

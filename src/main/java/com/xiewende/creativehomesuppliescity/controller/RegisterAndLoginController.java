@@ -48,20 +48,6 @@ public class RegisterAndLoginController {
     @Autowired
     private LoginService loginService;
 
-    @ApiOperation("hello")
-    @RequestMapping("/hello")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "idList", value = "id集合", required = true,
-                    dataType = "string", paramType = "query"),
-    })
-    public String hello(String idList){
-        if(idList == null) return "meiyoushuji";
-        String[] split = idList.split(",");
-        for(int i=0;i<split.length;i++){
-            System.out.println("第"+i+"个id："+split[i]);
-        }
-        return split.toString();
-    }
 
     //用户注册
     @ApiOperation("用户注册")
@@ -70,7 +56,7 @@ public class RegisterAndLoginController {
             @ApiImplicitParam(name = "affirmPassword", value = "确认密码",
                     dataType = "string", paramType = "query")
     })
-    public Result registerUser(UserVo user ,String affirmPassword, MultipartFile file, HttpServletRequest request){
+    public Result registerUser(UserVo user ,String affirmPassword){
         //1、判断是否为空
         if(user.getUserName() == null || "".equals(user.getUserName())
         || user.getPassword() == null || "".equals(user.getPassword())
@@ -99,6 +85,9 @@ public class RegisterAndLoginController {
         Matcher m1 = p1.matcher(user.getEmail());
         if(!m1.matches()) return Result.build(400,"邮箱格式错误！！！");
 
+        //默认头像部分
+        if(user.getImage() == null || "".equals(user.getImage())) user.setImage(properties.getDefalt_imge_path());
+
         //复制给 dao层用的bean
         User insertUser = new User();
         BeanUtils.copyProperties(user,insertUser); // 注意导入的包不一样，顺序不一样
@@ -107,28 +96,6 @@ public class RegisterAndLoginController {
         else insertUser.setGender(1);
         //加密密码
         insertUser.setPassword(MD5Utils.getMD5passwprd(user.getPassword()));
-
-        //头像部分
-        if(file == null || file.getSize() == 0){  //默认头像
-            insertUser.setImage(properties.getDefalt_imge_path());
-        }else{
-            //更好的做法就是抽出一个方法来，但是有点问题  只能这里很多代码了
-            String storePath = UploadFileUtil.upload(file, fastFileStorageClient,properties);
-            insertUser.setImage(storePath);
-
-//            int index = file.getOriginalFilename().lastIndexOf(".");//返回指定字符在此字符串中最后一次出现处的索引
-//            String suffix =file.getOriginalFilename().substring(index+1); //文件后缀名
-//            try {
-//                StorePath storePath = fastFileStorageClient.uploadFile(file.getInputStream(), file.getSize(), suffix, null);
-//                //获取上传到FastDFS中图片的路径
-//                String imgUrl = storePath.getFullPath();
-//                String saveUrl = "http://"+properties.getDefaltIp()+"/"+imgUrl;
-//                System.out.println("FastDFS中图片的路径: "+saveUrl);
-//                insertUser.setImage(saveUrl);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-        }
 
         //逻辑删除
         insertUser.setIsdelete(0);

@@ -27,6 +27,16 @@ public class UserVo {
     @ApiModelProperty(value = "用户详细地址")
     private String address;
 
+    @ApiModelProperty(value = "用户头像URL")
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getUserName() {
         return userName;

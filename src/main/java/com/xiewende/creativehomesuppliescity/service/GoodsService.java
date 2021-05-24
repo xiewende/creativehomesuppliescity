@@ -19,7 +19,7 @@ public interface GoodsService {
     Integer deleteGoods(Integer id);
 
     //查询全部。按照商品名，分类，风格，品牌模糊查询
-    List<Goods> listGoodsWithSomeDemand(String categoryFirstName,String categorySecondName,String typeName,String BrandName,String goodName);
+    List<Goods> listGoodsWithSomeDemand(String categoryFirstName,String categorySecondName,String typeName,String BrandName,String goodName,Integer pageNum);
 
     //id查询
     Goods findGoodById(Integer id);
