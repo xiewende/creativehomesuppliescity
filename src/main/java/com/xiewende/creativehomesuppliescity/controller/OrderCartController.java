@@ -57,7 +57,7 @@ public class OrderCartController {
         //1、判断是否为空
         if(userId == null || goodsId == null)
         {
-            return Result.build(400,"数据不可以为空");
+            return Result.build(400,"没有登录，请先登录此系统！");
         }
         //若没有选择个数的话，默认为1
         if("".equals(num) || num == null){num = 1;}

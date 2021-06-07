@@ -44,7 +44,17 @@ public class MyorderVo {
 
     private String receiveName;
 
+    private Integer status;
+
     private List<OrderGoods> orderGoodsList;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public List<OrderGoods> getOrderGoodsList() {
         return orderGoodsList;

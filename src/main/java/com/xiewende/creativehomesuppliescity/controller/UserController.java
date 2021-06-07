@@ -139,7 +139,7 @@ public class UserController {
                 || user.getEmail() == null || "".equals(user.getEmail())
                 || user.getSex() == null || "".equals(user.getSex())
                 || user.getIphone() == null || "".equals(user.getIphone())
-                || user.getImage() == null || "".equals(user.getImage()))
+                || user.getFile() == null || "".equals(user.getFile()))
         {
             return Result.build(400,"数据不可以为空");
         }
@@ -160,6 +160,7 @@ public class UserController {
         //复制给 dao层用的bean
         User updateUser = userService.selectUserById(id);
         BeanUtils.copyProperties(user,updateUser); // 注意导入的包不一样，顺序不一样
+        updateUser.setImage(user.getFile());
         //性别
         if(user.getSex().equals("男"))updateUser.setGender(0);
         else updateUser.setGender(1);

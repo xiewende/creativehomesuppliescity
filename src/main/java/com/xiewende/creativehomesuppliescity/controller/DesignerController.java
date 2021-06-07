@@ -53,7 +53,7 @@ public class DesignerController {
     //添加
     @ApiOperation("添加设计师")
     @PostMapping("/InsertDesigner")
-    public Result InsertDesigner(DesignerVo designerVo,MultipartFile file, HttpServletRequest request){
+    public Result InsertDesigner(DesignerVo designerVo){
         //1、判断是否为空
         if(designerVo.getCollege() == null || "".equals(designerVo.getCollege())
         || designerVo.getDesignConcept() == null || "".equals(designerVo.getDesignConcept())
@@ -99,13 +99,7 @@ public class DesignerController {
         insertdesigner.setPopularity(0);
 
         //头像
-        if(file == null || file.getSize() == 0){  //默认头像
-            insertdesigner.setImage(constantProperties.getDefalt_imge_path());
-        }else{
-            //更好的做法就是抽出一个方法来，但是有点问题  只能这里很多代码了
-            String storePath = UploadFileUtil.upload(file, fastFileStorageClient,constantProperties);
-            insertdesigner.setImage(storePath);
-        }
+        insertdesigner.setImage(designerVo.getFile());
 
         //添加
         Integer integer = designerService.InsertDesigner(insertdesigner);

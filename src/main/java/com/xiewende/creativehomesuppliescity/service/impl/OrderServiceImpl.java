@@ -175,7 +175,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Integer confirmShipments(Integer myorderId,String LogisticsMame) {
-
         //find this order
         Myorder myorder = myorderMapper.selectByPrimaryKey(myorderId);
         //update tataus

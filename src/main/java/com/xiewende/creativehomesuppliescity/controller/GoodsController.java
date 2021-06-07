@@ -48,6 +48,7 @@ public class GoodsController {
     //添加
     @ApiOperation("添加家居用品")
     @PostMapping("/insertGoods")
+    @CrossOrigin
     public Result insertGoods(GoodsVo goodsVo){
         //1、判断是否为空
         if(goodsVo.getBrandName() == null || "".equals(goodsVo.getBrandName())
@@ -57,30 +58,22 @@ public class GoodsController {
         || goodsVo.getPrice() == null || "".equals(goodsVo.getPrice())
         || goodsVo.getSize() == null || "".equals(goodsVo.getPrice())
         || goodsVo.getStore() == null || "".equals(goodsVo.getStore())
-        || goodsVo.getImage() == null || "".equals(goodsVo.getImage())
+        || goodsVo.getFile() == null || "".equals(goodsVo.getFile())
         || goodsVo.getStyleName() == null || "".equals(goodsVo.getStyleName()))
         {
             return Result.build(400,"数据不可以为空");
         }
-
         //复制
         Goods insertGoods = new Goods();
         BeanUtils.copyProperties(goodsVo,insertGoods); // 注意导入的包不一样，顺序不一样
-
+        insertGoods.setImage(goodsVo.getFile());
         //逻辑删除
         insertGoods.setIsdelete(0);
-
         //两个时间
         insertGoods.setCreateTime(new Date());
         insertGoods.setUpdateTime(new Date());
-
         //点击量
         insertGoods.setHitNumber(0);
-
-        //图片
-       /* String storePath = UploadFileUtil.upload(file, fastFileStorageClient,constantProperties);
-        insertGoods.setImage(storePath);*/
-
         //添加
         Integer integer = goodsService.insertGoods(insertGoods,goodsVo.getCategorySecondName(),goodsVo.getStyleName(),goodsVo.getBrandName());
         if (integer > 0) {
@@ -107,7 +100,7 @@ public class GoodsController {
         || goodsVo.getPrice() == null || "".equals(goodsVo.getPrice())
         || goodsVo.getSize() == null || "".equals(goodsVo.getPrice())
         || goodsVo.getStore() == null || "".equals(goodsVo.getStore())
-        || goodsVo.getImage() == null || "".equals(goodsVo.getImage())
+        || goodsVo.getFile() == null || "".equals(goodsVo.getFile())
         || goodsVo.getStyleName() == null || "".equals(goodsVo.getStyleName()))
         {
             return Result.build(400,"数据不可以为空");
@@ -117,6 +110,7 @@ public class GoodsController {
 
         //复制
         BeanUtils.copyProperties(goodsVo,updateGoods); // 注意导入的包不一样，顺序不一样
+        updateGoods.setImage(goodsVo.getFile());
 
         //逻辑删除
         updateGoods.setIsdelete(0);

@@ -86,11 +86,12 @@ public class RegisterAndLoginController {
         if(!m1.matches()) return Result.build(400,"邮箱格式错误！！！");
 
         //默认头像部分
-        if(user.getImage() == null || "".equals(user.getImage())) user.setImage(properties.getDefalt_imge_path());
+        if(user.getFile() == null || "".equals(user.getFile())) user.setFile(properties.getDefalt_imge_path());
 
         //复制给 dao层用的bean
         User insertUser = new User();
         BeanUtils.copyProperties(user,insertUser); // 注意导入的包不一样，顺序不一样
+        insertUser.setImage(user.getFile());
         //性别
         if(user.getSex().equals("男"))insertUser.setGender(0);
         else insertUser.setGender(1);
@@ -155,11 +156,7 @@ public class RegisterAndLoginController {
     @ApiOperation("退出登录")
     public Result loginout(){
         Boolean loginUser = redisTemplate.delete("user");
-        if (loginUser) {
-            return Result.build(200, "退出成功！！！");
-        } else {
-            return Result.build(500, "系统出现故障");
-        }
+        return Result.build(200, "退出成功！！！");
     }
 
 }

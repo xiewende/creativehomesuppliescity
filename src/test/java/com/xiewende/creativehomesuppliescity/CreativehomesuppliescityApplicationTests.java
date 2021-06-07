@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 
 @SpringBootTest
@@ -113,10 +114,27 @@ class CreativehomesuppliescityApplicationTests {
     //时间格式的转换
     @Test
     void test6(){
-        Date currentTime = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateString = formatter.format(currentTime);
-        System.out.println(dateString);
+//        Date currentTime = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String dateString = formatter.format(currentTime);
+//        System.out.println(dateString);
+//        String logisticsMame;
+//        Random random = new Random();
+//        int i = random.nextInt(5);
+//        if(i == 1) logisticsMame = "顺丰";
+//        else if(i==2)  logisticsMame = "圆通";
+//        else if(i==3)  logisticsMame = "中通";
+//        else if(i==4)  logisticsMame = "韵达";
+//        else logisticsMame = "邮政"; //默认物流
+//        System.out.println(logisticsMame);
+
+        Random random = new Random();
+        SimpleDateFormat allTime = new SimpleDateFormat("YYYYMMddHHmmSSS");
+        String subjectno = allTime.format(new Date()) + random.nextInt(10);
+        String subjectno1 = allTime.format(new Date());
+        System.out.println(subjectno);
+        System.out.println(subjectno1);
+        System.out.println(random.nextInt(10));
     }
 
 }

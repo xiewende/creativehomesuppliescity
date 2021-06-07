@@ -28,14 +28,14 @@ public class UserVo {
     private String address;
 
     @ApiModelProperty(value = "用户头像URL")
-    private String image;
+    private String file;
 
-    public String getImage() {
-        return image;
+    public String getFile() {
+        return file;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setFile(String file) {
+        this.file = file;
     }
 
     public String getUserName() {

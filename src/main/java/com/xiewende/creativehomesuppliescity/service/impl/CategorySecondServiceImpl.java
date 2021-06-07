@@ -75,13 +75,7 @@ public class CategorySecondServiceImpl implements CategorySecondService {
         CategorySecondExample categorySecondExample = new CategorySecondExample();
         CategorySecondExample.Criteria criteria = categorySecondExample.createCriteria();
         criteria.andIsdeleteEqualTo(0);
-        if(firstId != null){
-            CategoryFirstExample categoryFirstExample = new CategoryFirstExample();
-            CategoryFirstExample.Criteria criteria1 = categoryFirstExample.createCriteria();
-            criteria1.andCategoryNameEqualTo(firstId);
-            List<CategoryFirst> categoryFirsts = categoryFirstMapper.selectByExample(categoryFirstExample);
-            if(categoryFirsts.size()>0) criteria.andCategoryFirstIdEqualTo(categoryFirsts.get(0).getId());
-        }
+        if(firstId != null) criteria.andCategoryFirstIdEqualTo(Integer.valueOf(firstId));
         List<CategorySecond> categorySeconds = categorySecondMapper.selectByExample(categorySecondExample);
         //封装一级分类
         for(CategorySecond categorySecond:categorySeconds){

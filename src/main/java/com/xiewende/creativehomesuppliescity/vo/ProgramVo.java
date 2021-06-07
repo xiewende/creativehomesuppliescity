@@ -25,6 +25,8 @@ public class ProgramVo {
 
     private String finisnIdea;
 
+    private Integer status;
+
     //
     private String statusStr;
 
@@ -37,6 +39,14 @@ public class ProgramVo {
     private User user;
 
     private Designer designer;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public Designer getDesigner() {
         return designer;

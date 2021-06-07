@@ -231,22 +231,24 @@ public class ProgramController {
                     dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "finishIdea", value = "设计师设计的理念",
                     dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "file", value = "设计师设计的图片URL",
+                    dataType = "string", paramType = "query"),
     })
-    public Result finishThisProgram(Integer id, String finishIdea, MultipartFile file, HttpServletRequest request){
+    public Result finishThisProgram(Integer id, String finishIdea, String file){
 
         //String finishPic
 
         //1、判断是否为空
-        if( id== null || finishIdea == null || "".equals(finishIdea) ||  file == null || file.getSize() == 0)
+        if( id== null || finishIdea == null || "".equals(finishIdea) ||  file == null || "".equals(file))
         {
             return Result.build(400,"数据不可以为空");
         }
 
         //拿到图片
-        String storePath = UploadFileUtil.upload(file, fastFileStorageClient,properties);
+        //String storePath = UploadFileUtil.upload(file, fastFileStorageClient,properties);
 
         //提交
-        Integer integer = programService.finishThisProgram(id, storePath, finishIdea);
+        Integer integer = programService.finishThisProgram(id, file, finishIdea);
         if (integer > 0) {
             return Result.ok();
         }else {
@@ -276,7 +278,7 @@ public class ProgramController {
         if("".equals(userName)) userName = null;
 
         //分页
-        PageHelper.startPage(pageNum,1);
+        PageHelper.startPage(pageNum,properties.getPageSize());
 
         //执行查询
         List<Program> programs = programService.adminSelectAllProgram(goodsName,designerName,userName);

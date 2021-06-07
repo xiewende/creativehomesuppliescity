@@ -36,6 +36,17 @@ public class DesignerVo {
     @ApiModelProperty(value = "设计师毕业大学")
     private String college;
 
+    @ApiModelProperty(value = "设计师头像UERL")
+    private String file;
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
     public String getDesignerName() {
         return designerName;
     }

@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -96,20 +97,17 @@ public class OrderController {
         {
             return Result.build(400,"数据不可以为空");
         }
-
         String[] orderCartIdList = idList.split(",");
         Integer ids[] = new Integer[orderCartIdList.length];
         for(int i=0;i<ids.length;i++){
             ids[i] = Integer.valueOf(orderCartIdList[i]);
         }
-
         //对电话号码的校验
         String regExp = "^((13[0-9])|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[3,5,6,7,8])" +
                 "|(18[0-9])|(19[8,9]))\\d{8}$";
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(iphone);
         if(!m.matches())return Result.build(400,"电话号码格式错误！！！");
-
         //下单
         Integer integer = orderService.insertOrder(userId, ids, payTyle,address, iphone, receiveName);
         if (integer > 0) {
@@ -371,7 +369,14 @@ public class OrderController {
     public Result confirmShipments(Integer id,String logisticsMame){
         //1、判断是否为空
         if(logisticsMame == null || "".equals(logisticsMame)){
-            logisticsMame = "邮政"; //默认物流
+            //随机物流
+            Random random = new Random();
+            int i = random.nextInt(5);
+            if(i == 1) logisticsMame = "顺丰";
+            else if(i==2)  logisticsMame = "圆通";
+            else if(i==3)  logisticsMame = "中通";
+            else if(i==4)  logisticsMame = "韵达";
+            else logisticsMame = "邮政"; //默认物流
         }
         //发货
         Integer integer = orderService.confirmShipments(id, logisticsMame);

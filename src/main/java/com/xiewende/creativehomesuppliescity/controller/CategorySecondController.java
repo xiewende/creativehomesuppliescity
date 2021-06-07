@@ -125,8 +125,6 @@ public class CategorySecondController {
         List<CategorySecond> categorySeconds = categorySecondService.listAllCategorySecond(firstId);
         if (categorySeconds.size() > 0) {
             return Result.build(200, "有数据", categorySeconds);
-        }else if(categorySeconds == null || categorySeconds.size() == 0 ){
-            return Result.build(400,"没有数据");
         }else {
             return Result.build(500, "系统错误！！");
         }
